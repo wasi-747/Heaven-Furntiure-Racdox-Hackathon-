@@ -391,220 +391,55 @@
         </p>
       </div>
 
-      <!-- Video Showcase Mode Switcher -->
-      <div class="atelier-mode-switcher">
-        <button type="button" class="atelier-mode-btn active" id="btnModeMaking" data-mode="making">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-          <span>Live Workshop Making (3 Process Videos)</span>
-        </button>
-        <button type="button" class="atelier-mode-btn" id="btnModeYt" data-mode="youtube">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          <span>Finished Suites Gallery (8 YouTube Shorts)</span>
-        </button>
-      </div>
-
-      <!-- ① PURE WORKSHOP MAKING PROCESS (3 LOCAL MP4s) - ACTIVE BY DEFAULT -->
-      <div class="atelier-view-pane active" id="paneMaking">
-        <div class="shorts-reel-track">
-          <!-- REEL 1 -->
-          <div class="short-reel-card">
-            <div class="reel-video-wrapper">
-              <video class="reel-video" loop muted playsinline preload="metadata">
-                <source src="video of makings/bespoke.mp4" type="video/mp4">
-              </video>
-              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
-                <span class="sound-icon">🔇</span>
-              </button>
-            </div>
-            <div class="reel-card-info">
-              <h3 class="reel-title">Bespoke Hardwood Shaping</h3>
-              <p class="reel-desc">Precision carving and kiln stabilization of 100% solid timber frame in our Agrabad facility.</p>
-            </div>
+      <!-- PURE WORKSHOP MAKING PROCESS (3 LIVE CRAFT VIDEOS) -->
+      <div class="shorts-reel-track">
+        <!-- REEL 1 -->
+        <div class="short-reel-card">
+          <div class="reel-video-wrapper">
+            <video class="reel-video" loop muted playsinline preload="metadata">
+              <source src="video of makings/bespoke.mp4" type="video/mp4">
+            </video>
+            <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+              <span class="sound-icon">🔇</span>
+            </button>
           </div>
-
-          <!-- REEL 2 -->
-          <div class="short-reel-card">
-            <div class="reel-video-wrapper">
-              <video class="reel-video" loop muted playsinline preload="metadata">
-                <source src="video of makings/bespoke2.mp4" type="video/mp4">
-              </video>
-              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
-                <span class="sound-icon">🔇</span>
-              </button>
-            </div>
-            <div class="reel-card-info">
-              <h3 class="reel-title">Traditional Teak Joinery</h3>
-              <p class="reel-desc">Authentic mortise & tenon interlocking structure built for a 50-year generational heirloom lifespan.</p>
-            </div>
-          </div>
-
-          <!-- REEL 3 -->
-          <div class="short-reel-card">
-            <div class="reel-video-wrapper">
-              <video class="reel-video" loop muted playsinline preload="metadata">
-                <source src="video of makings/bespoke3.mp4" type="video/mp4">
-              </video>
-              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
-                <span class="sound-icon">🔇</span>
-              </button>
-            </div>
-            <div class="reel-card-info">
-              <h3 class="reel-title">Organic Hand-Rubbed Finish</h3>
-              <p class="reel-desc">Multi-coat Italian polyurethane and natural teak oil highlighting authentic timber grain.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ② OFFICIAL YOUTUBE SHORTS (8 VIDEOS) -->
-      <div class="atelier-view-pane" id="paneYoutube" style="display: none;">
-        <!-- Reel Category Filter Bar -->
-        <div class="reel-filter-bar">
-          <button type="button" class="reel-filter-btn active" data-filter="all">All Reels (8)</button>
-          <button type="button" class="reel-filter-btn" data-filter="living">Living Room (3)</button>
-          <button type="button" class="reel-filter-btn" data-filter="dining">Dining (3)</button>
-          <button type="button" class="reel-filter-btn" data-filter="bedroom">Bedroom (1)</button>
-          <button type="button" class="reel-filter-btn" data-filter="workshop">Atelier Joinery (1)</button>
-        </div>
-
-        <!-- 8 Official YouTube Shorts Grid -->
-        <div class="youtube-shorts-grid" id="ytShortsGrid">
-        <!-- SHORT 1: LUXURY SOFA PROCESS -->
-        <div class="yt-short-card" data-cat="living" data-video-id="lxhZF9s7fhY" data-title="Handcrafted Luxury Sofa Process">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/lxhZF9s7fhY/hqdefault.jpg" alt="Handcrafted Luxury Sofa Process - Heaven Furniture Mart" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Living Room</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Handcrafted Luxury Sofa Process</h3>
-            <p class="yt-short-desc">Watch the intricate mortise & tenon hardwood framing, organic gold gilding, and precision damask tailoring.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
+          <div class="reel-card-info">
+            <h3 class="reel-title">Bespoke Hardwood Shaping</h3>
+            <p class="reel-desc">Precision carving and kiln stabilization of 100% solid timber frame in our Agrabad facility.</p>
           </div>
         </div>
 
-        <!-- SHORT 2: MARBLE DINING TABLE 2026 -->
-        <div class="yt-short-card" data-cat="dining" data-video-id="z_5MpGMS7ww" data-title="Minimal Yet Royal! Marble Dining Table Design 2026">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/z_5MpGMS7ww/hqdefault.jpg" alt="Minimal Yet Royal! Marble Dining Table Design 2026" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Dining</span>
-            <span class="yt-official-badge">▶ YouTube</span>
+        <!-- REEL 2 -->
+        <div class="short-reel-card">
+          <div class="reel-video-wrapper">
+            <video class="reel-video" loop muted playsinline preload="metadata">
+              <source src="video of makings/bespoke2.mp4" type="video/mp4">
+            </video>
+            <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+              <span class="sound-icon">🔇</span>
+            </button>
           </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Minimal Yet Royal! Marble Dining</h3>
-            <p class="yt-short-desc">Heavy crystalline natural marble slab chamfered to perfection on a bespoke solid timber architectural base.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
-          </div>
-        </div>
-
-        <!-- SHORT 3: VICTORIAN COFFEE TABLE -->
-        <div class="yt-short-card" data-cat="living" data-video-id="95QrFvVcLXI" data-title="Handcrafted Victorian Style Coffee Table Set">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/95QrFvVcLXI/hqdefault.jpg" alt="Handcrafted Victorian Style Coffee Table Set" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Living Room</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Victorian Coffee Table Set</h3>
-            <p class="yt-short-desc">Hand-carved cabriole flourishes, heirloom joinery, and rich warm Italian poly glaze finish.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
+          <div class="reel-card-info">
+            <h3 class="reel-title">Traditional Teak Joinery</h3>
+            <p class="reel-desc">Authentic mortise & tenon interlocking structure built for a 50-year generational heirloom lifespan.</p>
           </div>
         </div>
 
-        <!-- SHORT 4: BEDROOM LUXURY REDEFINED -->
-        <div class="yt-short-card" data-cat="bedroom" data-video-id="h-Idu5_85WA" data-title="Bedroom Luxury Redefined Best In Town">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/h-Idu5_85WA/hqdefault.jpg" alt="Bedroom Luxury Redefined Best In Town" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Bedroom</span>
-            <span class="yt-official-badge">▶ YouTube</span>
+        <!-- REEL 3 -->
+        <div class="short-reel-card">
+          <div class="reel-video-wrapper">
+            <video class="reel-video" loop muted playsinline preload="metadata">
+              <source src="video of makings/bespoke3.mp4" type="video/mp4">
+            </video>
+            <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+              <span class="sound-icon">🔇</span>
+            </button>
           </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Bedroom Luxury Redefined</h3>
-            <p class="yt-short-desc">Floor-to-ceiling upholstered master suite headboard in deep jewel-tone velvet with silent joinery.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
-          </div>
-        </div>
-
-        <!-- SHORT 5: DREAM SOFA MADE TO ORDER -->
-        <div class="yt-short-card" data-cat="living" data-video-id="0BTzm-t0nYI" data-title="Dream Sofa Made to Order! Premium Customized Sofa Set">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/0BTzm-t0nYI/hqdefault.jpg" alt="Dream Sofa Made to Order - Heaven Furniture Mart" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Living Room</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Dream Sofa Made to Order</h3>
-            <p class="yt-short-desc">Customized to exact room dimensions with high-density ergonomic pocket springs and luxury fabric.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
+          <div class="reel-card-info">
+            <h3 class="reel-title">Organic Hand-Rubbed Finish</h3>
+            <p class="reel-desc">Multi-coat Italian polyurethane and natural teak oil highlighting authentic timber grain.</p>
           </div>
         </div>
-
-        <!-- SHORT 6: TURN DINING INTO LUXURY -->
-        <div class="yt-short-card" data-cat="dining" data-video-id="UiO60l9STIY" data-title="Turn Your Dining Space Into Luxury">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/UiO60l9STIY/hqdefault.jpg" alt="Turn Your Dining Space Into Luxury" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Dining</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Dining Space Transformation</h3>
-            <p class="yt-short-desc">Grand 8-seater banquet layout with hand-tufted dining chairs and high-gloss protective marble sealant.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
-          </div>
-        </div>
-
-        <!-- SHORT 7: LUXURY CUSTOMIZED ATELIER -->
-        <div class="yt-short-card" data-cat="workshop" data-video-id="J55q8hUvZy0" data-title="Luxury Customized Furniture Making">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/J55q8hUvZy0/hqdefault.jpg" alt="Luxury Customized Furniture Making" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Atelier Craft</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Master Atelier Joinery</h3>
-            <p class="yt-short-desc">Live footage from our senior craftsmen hand-shaping raw Burmese Teak and Gamari logs.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
-          </div>
-        </div>
-
-        <!-- SHORT 8: BEST LUXURY MARBLE DINING TABLE SET -->
-        <div class="yt-short-card" data-cat="dining" data-video-id="7j75XnxiJ8A" data-title="Best Luxury Marble Dining Table Set">
-          <div class="yt-short-thumb-wrapper">
-            <img src="https://img.youtube.com/vi/7j75XnxiJ8A/hqdefault.jpg" alt="Best Luxury Marble Dining Table Set" loading="lazy">
-            <div class="yt-play-badge">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <span class="yt-category-pill">Dining</span>
-            <span class="yt-official-badge">▶ YouTube</span>
-          </div>
-          <div class="yt-short-info">
-            <h3 class="yt-short-title">Best Luxury Marble Suite</h3>
-            <p class="yt-short-desc">Contemporary clean-line aesthetic meeting classical Bengali warmth, engineered for multi-decade durability.</p>
-            <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   </section>
@@ -1139,54 +974,80 @@
     </div>
   </section>
 
-<!-- ⑨ AGRABAD SHOWROOM TEASER & MAP -->
-  <section class="showroom-section">
+  <!-- ⑨ AGRABAD SHOWROOM TEASER & MAP -->
+  <section class="showroom-section" id="showroomSection">
     <div class="container showroom-grid">
-      <div>
+      <!-- COLUMN 1: EDITORIAL & VISITING INFO -->
+      <div class="showroom-editorial-col">
         <span class="section-kicker">FLAGSHIP STUDIO VISIT</span>
         <h2 class="section-title">Experience The Craft In Person</h2>
-        <p class="showroom-text">Visit our 4,000 sq.ft. studio on Agrabad Access Road to inspect timber grains, test cushion densities, and discuss your blueprints face-to-face.</p>
+        <p class="showroom-text">
+          Visit our 4,000 sq.ft. studio on Agrabad Access Road to inspect seasoned Burmese timber grains, test cushion densities, and discuss your custom blueprints face-to-face.
+        </p>
+
         <div class="showroom-info-list">
           <div class="info-item">
             <div class="info-icon">📍</div>
-            <div>
+            <div class="info-details">
               <strong>Studio Address</strong>
               <p>Opposite RAK Ceramics, Agrabad Access Road, Chattogram, Bangladesh</p>
+              <span class="sub-hint">Easy private parking available directly in front of the atelier.</span>
             </div>
           </div>
+
           <div class="info-item">
             <div class="info-icon">🕒</div>
-            <div>
+            <div class="info-details">
               <strong>Visiting Hours</strong>
-              <p>Saturday – Thursday: 10 AM – 9 PM | Friday: 3 PM – 9 PM</p>
+              <p>Saturday – Thursday: 10:00 AM – 9:00 PM | Friday: 3:00 PM – 9:00 PM</p>
+              <span class="sub-hint">Open 7 days a week · Walk-ins & private consultations welcome.</span>
             </div>
           </div>
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
-          <a href="showroom.html" class="btn btn-gold">Explore Showroom & Book Visit &rarr;</a>
-          <a href="showroom.html#virtualTour" class="btn btn-outline-gold" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+
+          <div class="info-item">
+            <div class="info-icon">📞</div>
+            <div class="info-details">
+              <strong>Direct Concierge & Consultations</strong>
+              <p>Hotline: +880 1960-481983 &nbsp;|&nbsp; WhatsApp Available</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="showroom-btn-group">
+          <a href="showroom.html" class="btn btn-gold">
+            <span>Explore Showroom & Book Visit</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="showroom.html#virtualTour" class="btn btn-outline-gold">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <span>Watch 4K Studio Tour</span>
           </a>
         </div>
       </div>
 
-      <div class="showroom-visual-card">
+      <!-- COLUMN 2: SHOWCASE EXTERIOR & INTERACTIVE MAP -->
+      <div class="showroom-visuals-col">
         <div class="showroom-card-inner">
-          <img src="assets/heaven_showroom_exterior.jpg" alt="Heaven Furniture Mart Flagship Showroom Building, Agrabad" class="showroom-img" style="border-radius: 12px; object-fit: cover; width: 100%; height: 260px;">
-          <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; color: #8C6D28;">
-            <span>🏢</span><span>Heaven Furniture Mart Flagship Building — Opposite RAK Ceramics, Agrabad Access Road</span>
+          <img src="assets/heaven_showroom_exterior.jpg" alt="Heaven Furniture Mart Flagship Showroom Building, Agrabad" class="showroom-img">
+          <div class="showroom-overlay-tag">
+            <div class="tag-header">
+              <span class="tag-title">Flagship Agrabad Atelier</span>
+              <span class="tag-status">● Open Today</span>
+            </div>
+            <span class="tag-desc">Opposite RAK Ceramics, Agrabad Access Road, Chattogram</span>
           </div>
         </div>
+
         <div class="map-embed-frame">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14764.717082986423!2d91.802111!3d22.327552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30acd8994f29a07d%3A0xbcfba3a8b417bbbe!2sAgrabad%20Access%20Rd%2C%20Chattogram!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" 
             width="100%" 
-            height="200" 
-            style="border:0; border-radius: 12px;" 
+            height="220" 
+            style="border:0; display:block;" 
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade"
-            title="Location Map"
+            title="Agrabad Flagship Studio Google Map"
           ></iframe>
         </div>
       </div>
@@ -1254,7 +1115,7 @@
           <li><a href="dining.html">Dining</a></li>
           <li><a href="office.html">Office</a></li>
           <li><a href="showroom.html">Agrabad Showroom</a></li>
-          <li><a href="index.html#estimator">Custom Residence Fitout</a></li>
+          <li><a href="#estimator">Custom Residence Fitout</a></li>
         </ul>
       </div>
 
@@ -1267,7 +1128,7 @@
           <li><a href="heritage.html#timber">100% Solid Seasoned Timber</a></li>
           <li><a href="heritage.html#science">Kiln-Drying Science Lab</a></li>
           <li><a href="heritage.html#guarantee">Official 10-Year Guarantee</a></li>
-          <li><a href="index.html#proofs">Google Client Reviews</a></li>
+          <li><a href="#proofs">Google Client Reviews</a></li>
         </ul>
       </div>
 
@@ -1356,22 +1217,7 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN REELS CINEMA MODAL -->
-  <div class="shorts-cinema-modal" id="shortsCinemaModal">
-    <div class="shorts-cinema-box">
-      <button type="button" class="shorts-cinema-close" id="shortsCinemaClose" aria-label="Close Player">&times;</button>
-      <div class="shorts-iframe-container" id="shortsIframeContainer">
-        <!-- iframe injected dynamically -->
-      </div>
-      <div class="shorts-cinema-footer">
-        <h4 id="shortsModalTitle">Heaven Furniture Mart</h4>
-        <a href="https://wa.me/8801960481983?text=Hi%20Heaven%20Furniture%2C%20I%20saw%20your%20workshop%20reel%20and%20would%20like%20to%20inquire." target="_blank" rel="noopener" class="btn-short-wa" id="shortsModalWaLink">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.146-.532-1.854-.772-3.033-2.658-3.125-2.78-.093-.122-.751-.998-.751-1.905 0-.907.476-1.353.645-1.538.169-.185.37-.231.493-.231.124 0 .248.002.355.008.113.007.264-.043.413.315.154.37.527 1.285.573 1.378.046.093.077.201.015.324-.062.123-.093.2-.185.308-.092.108-.194.241-.277.324-.093.093-.19.194-.082.38.108.185.479.79 1.026 1.277.705.629 1.3.824 1.485.916.185.093.293.077.401-.046.108-.124.463-.54.586-.726.124-.185.247-.154.416-.092.17.062 1.08.51 1.265.602.185.093.308.139.355.216.046.077.046.447-.098.852z"/></svg>
-          <span>Inquire This Piece</span>
-        </a>
-      </div>
-    </div>
-  </div>
+
 
   <script src="app.js"></script>
   <script src="products_data.js"></script>

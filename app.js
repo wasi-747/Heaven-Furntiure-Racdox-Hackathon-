@@ -701,36 +701,11 @@ function updateShowingCount() {
 
 
 /* ==========================================================================
-   11. ATELIER WORKSHOP SHORTS CONTROLLER (Hover Play / Scroll Play)
+   11. ATELIER WORKSHOP SHORTS CONTROLLER (Pure Craft Making Videos)
    ========================================================================== */
 function initWorkshopShorts() {
   const reelCards = document.querySelectorAll('.short-reel-card');
-  const btnMaking = document.getElementById('btnModeMaking');
-  const btnYt = document.getElementById('btnModeYt');
-  const paneMaking = document.getElementById('paneMaking');
-  const paneYt = document.getElementById('paneYoutube');
-
-  // Mode Switcher between Live Workshop Making and YouTube Shorts
-  if (btnMaking && btnYt && paneMaking && paneYt) {
-    btnMaking.addEventListener('click', () => {
-      btnMaking.classList.add('active');
-      btnYt.classList.remove('active');
-      paneMaking.style.display = 'block';
-      paneYt.style.display = 'none';
-    });
-
-    btnYt.addEventListener('click', () => {
-      btnYt.classList.add('active');
-      btnMaking.classList.remove('active');
-      paneMaking.style.display = 'none';
-      paneYt.style.display = 'block';
-      // Pause any running workshop making videos
-      document.querySelectorAll('.reel-video').forEach(v => {
-        v.pause();
-        v.closest('.reel-video-wrapper')?.classList.remove('playing');
-      });
-    });
-  }
+  if (!reelCards.length) return;
 
   const pauseAllOthers = (currentVideo) => {
     document.querySelectorAll('.reel-video').forEach(v => {
@@ -818,11 +793,20 @@ function initWorkshopShorts() {
 }
 
 /* ==========================================================================
-   12. GRAND ATELIER 3D PORTAL INTRO CONTROLLER
+   12. GRAND ATELIER 3D PORTAL INTRO CONTROLLER (Plays on Every Load/Refresh)
    ========================================================================== */
 function initGrandPortalIntro() {
   const introEl = document.getElementById('grandPortalIntro');
   if (!introEl) return;
+
+  // Clear any legacy session locks
+  try {
+    sessionStorage.removeItem('hfm_door_intro_seen');
+  } catch (e) {}
+
+  // Ensure intro element is visible and reset on every refresh
+  introEl.classList.remove('opening', 'portal-hidden');
+  introEl.style.display = '';
 
   // Prevent scrolling during door intro
   document.body.style.overflow = 'hidden';
@@ -841,6 +825,14 @@ function initGrandPortalIntro() {
     setTimeout(() => {
       introEl.style.display = 'none';
       document.body.style.overflow = '';
+
+      // If page was loaded with a deep-link hash, smoothly scroll to it now
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     }, 2100);
   };
 
@@ -862,18 +854,54 @@ function initGrandPortalIntro() {
 }
 
 /* ==========================================================================
-   13. YOUTUBE SHORTS GALLERY & CINEMA MODAL CONTROLLER
+   13. YOUTUBE SHORTS CONTROLLER (Inline Hover-to-Play, NO POPUP MODAL)
    ========================================================================== */
 function initYouTubeShortsGallery() {
   const filterBtns = document.querySelectorAll('.reel-filter-btn');
   const shortCards = document.querySelectorAll('.yt-short-card');
-  const modal = document.getElementById('shortsCinemaModal');
-  const closeBtn = document.getElementById('shortsCinemaClose');
-  const iframeContainer = document.getElementById('shortsIframeContainer');
-  const modalTitle = document.getElementById('shortsModalTitle');
-  const modalWaLink = document.getElementById('shortsModalWaLink');
+  if (!shortCards.length) return;
 
-  // Category Filtering
+  const isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Helper to stop and remove inline iframe
+  const stopCardVideo = (card) => {
+    const thumbWrapper = card.querySelector('.yt-short-thumb-wrapper');
+    if (!thumbWrapper) return;
+    const existingIframe = thumbWrapper.querySelector('.yt-inline-iframe');
+    if (existingIframe) {
+      existingIframe.remove();
+    }
+    card.classList.remove('is-playing');
+  };
+
+  const stopAllCardVideos = (currentCard) => {
+    shortCards.forEach(c => {
+      if (c !== currentCard) stopCardVideo(c);
+    });
+  };
+
+  // Helper to play inline video on the card without any popup
+  const playCardVideo = (card) => {
+    const videoId = card.getAttribute('data-video-id');
+    const thumbWrapper = card.querySelector('.yt-short-thumb-wrapper');
+    if (!videoId || !thumbWrapper) return;
+
+    if (card.classList.contains('is-playing')) return;
+
+    stopAllCardVideos(card);
+    card.classList.add('is-playing');
+
+    const iframe = document.createElement('iframe');
+    iframe.className = 'yt-inline-iframe';
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&modestbranding=1&rel=0`;
+    iframe.title = card.getAttribute('data-title') || 'Workshop Reel';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.tabIndex = -1;
+
+    thumbWrapper.appendChild(iframe);
+  };
+
+  // Category Filtering (on pages with filters)
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -881,6 +909,7 @@ function initYouTubeShortsGallery() {
       const filter = btn.getAttribute('data-filter');
 
       shortCards.forEach(card => {
+        stopCardVideo(card);
         const cat = card.getAttribute('data-cat');
         if (filter === 'all' || cat === filter) {
           card.style.display = 'flex';
@@ -899,57 +928,64 @@ function initYouTubeShortsGallery() {
     });
   });
 
-  // Modal Open & Playback
+  // Attach inline hover play & mobile tap play (No popups!)
   shortCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const videoId = card.getAttribute('data-video-id');
-      const title = card.getAttribute('data-title') || 'Official Workshop Craft Reel';
-
-      if (!videoId || !modal || !iframeContainer) return;
-
-      if (modalTitle) modalTitle.textContent = title;
-      if (modalWaLink) {
-        modalWaLink.href = `https://wa.me/8801960481983?text=Hi%20Heaven%20Furniture%2C%20I%20am%20inquiring%20about%20your%20workshop%20design%3A%20${encodeURIComponent(title)}%20(YouTube%20Short%20${videoId})`;
-      }
-
-      // Inject clean, secure YouTube embed
-      iframeContainer.innerHTML = `
-        <iframe 
-          src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&loop=1&playlist=${videoId}&playsinline=1" 
-          title="${title}" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      `;
-
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  // Close Modal
-  const closeModal = () => {
-    if (!modal) return;
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-    if (iframeContainer) {
-      iframeContainer.innerHTML = '';
+    if (isHoverDevice) {
+      card.addEventListener('mouseenter', () => playCardVideo(card));
+      card.addEventListener('mouseleave', () => stopCardVideo(card));
     }
-  };
 
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
+    // Touch / click toggle inline
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (card.classList.contains('is-playing')) {
+        stopCardVideo(card);
+      } else {
+        playCardVideo(card);
+      }
     });
-  }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      closeModal();
+    // Mobile scroll auto-play when card is 60% in view
+    if ('IntersectionObserver' in window && !isHoverDevice) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            playCardVideo(card);
+          } else {
+            stopCardVideo(card);
+          }
+        });
+      }, { threshold: 0.6 });
+      observer.observe(card);
     }
   });
 }
+
+// Universal Smooth In-Page Anchor Navigation (Prevents Page Reloads & Door Re-triggering)
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a');
+  if (!link) return;
+  const href = link.getAttribute('href');
+  if (!href) return;
+
+  const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+  let targetId = null;
+
+  if (href.startsWith('#') && href.length > 1) {
+    targetId = href.substring(1);
+  } else if (isIndex && href.startsWith('index.html#')) {
+    targetId = href.split('#')[1];
+  }
+
+  if (targetId) {
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      e.preventDefault();
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, null, '#' + targetId);
+    }
+  }
+});
 
 // Showroom 4K Tour Chapter Navigation
 window.jumpShowroomTour = function(seconds) {

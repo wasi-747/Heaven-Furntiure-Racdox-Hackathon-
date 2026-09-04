@@ -1907,102 +1907,229 @@ button, input, select, textarea {
 .showroom-section {
   padding: clamp(5rem, 8vw, 7.5rem) 0;
   background: #091214;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  position: relative;
+}
+
+[data-theme="light"] .showroom-section {
+  background: #F8F6F0 !important;
+  border-top: 1px solid #E5DFD5 !important;
+  border-bottom: 1px solid #E5DFD5 !important;
 }
 
 .showroom-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3.5rem;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.5rem, 4.5vw, 5rem);
   align-items: center;
+}
+
+.showroom-editorial-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.showroom-text {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.68;
+  margin-bottom: 2rem;
+}
+
+[data-theme="light"] .showroom-text {
+  color: #57534E !important;
 }
 
 .showroom-info-list {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  margin: 2rem 0;
+  gap: 1.15rem;
+  margin-bottom: 2.2rem;
 }
 
 .info-item {
   display: flex;
-  gap: 1.1rem;
+  gap: 1.15rem;
   align-items: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  transition: all 0.25s ease;
+}
+
+.info-item:hover {
+  border-color: var(--color-gold);
+  background: rgba(212, 175, 55, 0.06);
+  transform: translateX(4px);
+}
+
+[data-theme="light"] .info-item {
+  background: #FFFFFF !important;
+  border-color: #E2DDD5 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .info-item:hover {
+  border-color: #B8860B !important;
+  background: #FCFAF6 !important;
 }
 
 .info-icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-sm);
-  background: rgba(212, 175, 55, 0.1);
+  border-radius: var(--radius-md);
+  background: rgba(212, 175, 55, 0.12);
   border: 1px solid var(--border-gold);
   color: var(--color-gold);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.2rem;
   flex-shrink: 0;
 }
 
-.info-item strong {
-  font-size: 0.95rem;
+.info-details strong {
+  font-size: 0.98rem;
   color: #FFFFFF;
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
 }
 
-.info-item p {
-  font-size: 0.85rem;
-  color: #57534E;
-  line-height: 1.45;
+[data-theme="light"] .info-details strong {
+  color: #1A1918 !important;
+}
+
+.info-details p {
+  font-size: 0.88rem;
+  color: #BAC6CB;
+  line-height: 1.5;
+  margin: 0;
+}
+
+[data-theme="light"] .info-details p {
+  color: #4A4540 !important;
 }
 
 .sub-hint {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--color-gold);
+  display: block;
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+
+[data-theme="light"] .sub-hint {
+  color: #8C6D28 !important;
+}
+
+.showroom-btn-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Right Visuals Column */
+.showroom-visuals-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
 }
 
 .showroom-card-inner {
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  border: 1px solid var(--border-gold);
-  box-shadow: var(--shadow-card); border: 1px solid #E8E4DE;
-  margin-bottom: 1.5rem;
+  border: 1.5px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  margin: 0;
+}
+
+[data-theme="light"] .showroom-card-inner {
+  border-color: #E2DDD5 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
 .showroom-img {
   width: 100%;
-  height: 320px;
+  height: 270px;
   object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.showroom-card-inner:hover .showroom-img {
+  transform: scale(1.03);
 }
 
 .showroom-overlay-tag {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  background: rgba(10, 18, 20, 0.88);
+  bottom: 0.85rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  background: rgba(10, 18, 20, 0.9);
   backdrop-filter: blur(12px);
-  padding: 0.9rem 1.25rem;
+  padding: 0.85rem 1.15rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+[data-theme="light"] .showroom-overlay-tag {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(184, 134, 11, 0.3) !important;
+}
+
+.tag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
 }
 
 .tag-title {
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #FFFFFF;
 }
 
+[data-theme="light"] .tag-title {
+  color: #1A1918 !important;
+}
+
+.tag-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .tag-desc {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--color-gold);
+  display: block;
+  font-weight: 500;
+}
+
+[data-theme="light"] .tag-desc {
+  color: #8C6D28 !important;
 }
 
 .map-embed-frame {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  border: 1px solid var(--border-gold);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  background: #000;
+}
+
+[data-theme="light"] .map-embed-frame {
+  border-color: #E2DDD5 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ==========================================================================
@@ -6269,6 +6396,24 @@ body, .site-header, .collection-card, .product-modal-container {
 
 .yt-short-card:hover .yt-short-thumb-wrapper img {
   transform: scale(1.05);
+}
+
+.yt-inline-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: inherit;
+  z-index: 5;
+}
+
+.yt-short-card.is-playing .yt-play-badge,
+.yt-short-card.is-playing .yt-official-badge {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
 .yt-play-badge {
