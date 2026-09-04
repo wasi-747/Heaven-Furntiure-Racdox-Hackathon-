@@ -6,6 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
+  initGrandPortalIntro();
   initMobileDrawer();
   init4AngleShowcase();
   initCategoryPills();
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   initSmoothScroll();
   initWorkshopShorts();
+  initYouTubeShortsGallery();
   updateShowingCount();
 });
 
@@ -778,3 +780,169 @@ function initWorkshopShorts() {
     }
   });
 }
+
+/* ==========================================================================
+   12. GRAND ATELIER 3D PORTAL INTRO CONTROLLER
+   ========================================================================== */
+function initGrandPortalIntro() {
+  const introEl = document.getElementById('grandPortalIntro');
+  if (!introEl) return;
+
+  const skipBtn = document.getElementById('portalSkipBtn');
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceIntro = urlParams.get('intro') === '1';
+  const hasSeen = sessionStorage.getItem('hfm_portal_intro_shown');
+
+  if (hasSeen && !forceIntro) {
+    introEl.style.display = 'none';
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  let isDismissed = false;
+  const dismissPortal = () => {
+    if (isDismissed) return;
+    isDismissed = true;
+    introEl.classList.add('opening');
+    setTimeout(() => {
+      introEl.classList.add('portal-hidden');
+    }, 1400);
+    setTimeout(() => {
+      introEl.style.display = 'none';
+      document.body.style.overflow = '';
+      try {
+        sessionStorage.setItem('hfm_portal_intro_shown', '1');
+      } catch (e) {}
+    }, 2100);
+  };
+
+  if (skipBtn) {
+    skipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      introEl.classList.add('portal-hidden');
+      setTimeout(() => {
+        introEl.style.display = 'none';
+        document.body.style.overflow = '';
+        try {
+          sessionStorage.setItem('hfm_portal_intro_shown', '1');
+        } catch (err) {}
+      }, 500);
+    });
+  }
+
+  introEl.addEventListener('click', () => {
+    dismissPortal();
+  });
+
+  // Automatic majestic 3D door swing timing
+  setTimeout(() => {
+    dismissPortal();
+  }, 450);
+}
+
+/* ==========================================================================
+   13. YOUTUBE SHORTS GALLERY & CINEMA MODAL CONTROLLER
+   ========================================================================== */
+function initYouTubeShortsGallery() {
+  const filterBtns = document.querySelectorAll('.reel-filter-btn');
+  const shortCards = document.querySelectorAll('.yt-short-card');
+  const modal = document.getElementById('shortsCinemaModal');
+  const closeBtn = document.getElementById('shortsCinemaClose');
+  const iframeContainer = document.getElementById('shortsIframeContainer');
+  const modalTitle = document.getElementById('shortsModalTitle');
+  const modalWaLink = document.getElementById('shortsModalWaLink');
+
+  // Category Filtering
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+
+      shortCards.forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        if (filter === 'all' || cat === filter) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 20);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 200);
+        }
+      });
+    });
+  });
+
+  // Modal Open & Playback
+  shortCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const videoId = card.getAttribute('data-video-id');
+      const title = card.getAttribute('data-title') || 'Official Workshop Craft Reel';
+
+      if (!videoId || !modal || !iframeContainer) return;
+
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalWaLink) {
+        modalWaLink.href = `https://wa.me/8801960481983?text=Hi%20Heaven%20Furniture%2C%20I%20am%20inquiring%20about%20your%20workshop%20design%3A%20${encodeURIComponent(title)}%20(YouTube%20Short%20${videoId})`;
+      }
+
+      // Inject clean, secure YouTube embed
+      iframeContainer.innerHTML = `
+        <iframe 
+          src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&loop=1&playlist=${videoId}&playsinline=1" 
+          title="${title}" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      `;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close Modal
+  const closeModal = () => {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (iframeContainer) {
+      iframeContainer.innerHTML = '';
+    }
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
+// Showroom 4K Tour Chapter Navigation
+window.jumpShowroomTour = function(seconds) {
+  const iframe = document.getElementById('showroomTourPlayer');
+  if (!iframe) return;
+  try {
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: 'command',
+      func: 'seekTo',
+      args: [seconds, true]
+    }), '*');
+  } catch (err) {
+    iframe.src = `https://www.youtube-nocookie.com/embed/qEwoJWbXSTs?autoplay=1&start=${seconds}&rel=0&modestbranding=1`;
+  }
+};
+
