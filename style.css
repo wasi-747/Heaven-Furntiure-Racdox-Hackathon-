@@ -5741,14 +5741,19 @@ body, .site-header, .collection-card, .product-modal-container {
   width: 100vw;
   height: 100vh;
   z-index: 999999;
-  background: #080E10;
+  background: transparent !important; /* CRITICAL: Must be transparent so homepage behind is revealed as doors open */
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   perspective: 1400px;
   transform-style: preserve-3d;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  pointer-events: all;
+}
+
+.grand-portal-intro.opening {
+  pointer-events: none; /* Allow immediate interaction with homepage as doors swing open */
 }
 
 .grand-portal-intro.portal-hidden {
@@ -5762,8 +5767,8 @@ body, .site-header, .collection-card, .product-modal-container {
   top: 2rem;
   right: 2.5rem;
   z-index: 1000000;
-  background: rgba(18, 30, 33, 0.75);
-  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(18, 30, 33, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.5);
   color: #D4AF37;
   padding: 0.55rem 1.25rem;
   border-radius: var(--radius-full);
@@ -5778,6 +5783,7 @@ body, .site-header, .collection-card, .product-modal-container {
   cursor: pointer;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  pointer-events: all;
 }
 
 .portal-skip-btn:hover {
@@ -5793,55 +5799,43 @@ body, .site-header, .collection-card, .product-modal-container {
   height: 100%;
   perspective: 1400px;
   display: flex;
+  background: transparent !important;
 }
 
-/* Ambient Backlight Flood */
+/* Ambient Backlight disabled so no unnatural green/cloudy tint blocks homepage */
 .portal-backlight {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80vw;
-  height: 80vh;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, rgba(184, 134, 11, 0.15) 45%, transparent 70%);
-  opacity: 0;
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.grand-portal-intro.opening .portal-backlight {
-  opacity: 1;
+  display: none !important;
 }
 
 /* 3D DOORS */
 .portal-door {
   position: absolute;
   top: 0;
-  width: 50vw;
   height: 100vh;
   z-index: 2;
   transform-style: preserve-3d;
-  transition: transform 1.75s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform 1.6s cubic-bezier(0.65, 0, 0.2, 1);
   will-change: transform;
 }
 
 .portal-door-left {
   left: 0;
+  width: 50vw;
   transform-origin: left center;
 }
 
 .portal-door-right {
   right: 0;
+  width: calc(50vw + 2px);
   transform-origin: right center;
 }
 
 .grand-portal-intro.opening .portal-door-left {
-  transform: rotateY(-95deg);
+  transform: rotateY(-105deg);
 }
 
 .grand-portal-intro.opening .portal-door-right {
-  transform: rotateY(95deg);
+  transform: rotateY(105deg);
 }
 
 .door-face {

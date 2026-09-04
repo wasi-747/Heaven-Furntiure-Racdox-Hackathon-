@@ -789,15 +789,8 @@ function initGrandPortalIntro() {
   if (!introEl) return;
 
   const skipBtn = document.getElementById('portalSkipBtn');
-  const urlParams = new URLSearchParams(window.location.search);
-  const forceIntro = urlParams.get('intro') === '1';
-  const hasSeen = sessionStorage.getItem('hfm_portal_intro_shown');
 
-  if (hasSeen && !forceIntro) {
-    introEl.style.display = 'none';
-    return;
-  }
-
+  // Prevent scrolling during door intro
   document.body.style.overflow = 'hidden';
 
   let isDismissed = false;
@@ -805,15 +798,15 @@ function initGrandPortalIntro() {
     if (isDismissed) return;
     isDismissed = true;
     introEl.classList.add('opening');
+
+    // As soon as doors finish swinging open, hide portal overlay
     setTimeout(() => {
       introEl.classList.add('portal-hidden');
-    }, 1400);
+    }, 1600);
+
     setTimeout(() => {
       introEl.style.display = 'none';
       document.body.style.overflow = '';
-      try {
-        sessionStorage.setItem('hfm_portal_intro_shown', '1');
-      } catch (e) {}
     }, 2100);
   };
 
@@ -824,10 +817,7 @@ function initGrandPortalIntro() {
       setTimeout(() => {
         introEl.style.display = 'none';
         document.body.style.overflow = '';
-        try {
-          sessionStorage.setItem('hfm_portal_intro_shown', '1');
-        } catch (err) {}
-      }, 500);
+      }, 350);
     });
   }
 
@@ -835,10 +825,10 @@ function initGrandPortalIntro() {
     dismissPortal();
   });
 
-  // Automatic majestic 3D door swing timing
+  // Hold closed for 650ms so the user sees the grand wooden doors and gold seal, then swing open
   setTimeout(() => {
     dismissPortal();
-  }, 450);
+  }, 650);
 }
 
 /* ==========================================================================
