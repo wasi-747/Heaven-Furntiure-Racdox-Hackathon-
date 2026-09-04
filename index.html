@@ -396,28 +396,95 @@
     </div>
   </section>
 
-  <!-- ④ ATELIER WORKSHOP SHORTS / CRAFTSMANSHIP IN MOTION (HEAVEN FURNITURE MART OFFICIAL YOUTUBE REELS) -->
+  <!-- ④ ATELIER WORKSHOP SHORTS / CRAFTSMANSHIP IN MOTION -->
   <section class="workshop-shorts-section" id="workshopShorts">
     <div class="container">
       <div class="text-center mb-8">
-        <span class="section-kicker">✦ Live Master Joinery & Craftsmanship · Official YouTube Studio</span>
+        <span class="section-kicker">✦ Live Master Joinery & Craftsmanship · Agrabad Facility</span>
         <h2 class="section-title">The Atelier in Motion</h2>
         <p class="section-subtitle max-w-xl mx-auto">
-          Exclusive workshop reels from our Agrabad facility. Watch our senior ustads hand-craft Burmese teak, carve classical cabriole curves, and shape royal marble dining suites.
+          Step behind the curtain into our Agrabad workshop. Watch our senior ustads hand-shape seasoned Burmese teak, craft precision mortise-and-tenon joints, and hand-rub organic teak oils into every grain.
         </p>
       </div>
 
-      <!-- Reel Category Filter Bar -->
-      <div class="reel-filter-bar">
-        <button type="button" class="reel-filter-btn active" data-filter="all">All Reels (8)</button>
-        <button type="button" class="reel-filter-btn" data-filter="living">Living Room (3)</button>
-        <button type="button" class="reel-filter-btn" data-filter="dining">Dining (3)</button>
-        <button type="button" class="reel-filter-btn" data-filter="bedroom">Bedroom (1)</button>
-        <button type="button" class="reel-filter-btn" data-filter="workshop">Atelier Joinery (1)</button>
+      <!-- Video Showcase Mode Switcher -->
+      <div class="atelier-mode-switcher">
+        <button type="button" class="atelier-mode-btn active" id="btnModeMaking" data-mode="making">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <span>Live Workshop Making (3 Process Videos)</span>
+        </button>
+        <button type="button" class="atelier-mode-btn" id="btnModeYt" data-mode="youtube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <span>Finished Suites Gallery (8 YouTube Shorts)</span>
+        </button>
       </div>
 
-      <!-- 8 Official YouTube Shorts Grid -->
-      <div class="youtube-shorts-grid" id="ytShortsGrid">
+      <!-- ① PURE WORKSHOP MAKING PROCESS (3 LOCAL MP4s) - ACTIVE BY DEFAULT -->
+      <div class="atelier-view-pane active" id="paneMaking">
+        <div class="shorts-reel-track">
+          <!-- REEL 1 -->
+          <div class="short-reel-card">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" loop muted playsinline preload="metadata">
+                <source src="video of makings/bespoke.mp4" type="video/mp4">
+              </video>
+              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+                <span class="sound-icon">🔇</span>
+              </button>
+            </div>
+            <div class="reel-card-info">
+              <h3 class="reel-title">Bespoke Hardwood Shaping</h3>
+              <p class="reel-desc">Precision carving and kiln stabilization of 100% solid timber frame in our Agrabad facility.</p>
+            </div>
+          </div>
+
+          <!-- REEL 2 -->
+          <div class="short-reel-card">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" loop muted playsinline preload="metadata">
+                <source src="video of makings/bespoke2.mp4" type="video/mp4">
+              </video>
+              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+                <span class="sound-icon">🔇</span>
+              </button>
+            </div>
+            <div class="reel-card-info">
+              <h3 class="reel-title">Traditional Teak Joinery</h3>
+              <p class="reel-desc">Authentic mortise & tenon interlocking structure built for a 50-year generational heirloom lifespan.</p>
+            </div>
+          </div>
+
+          <!-- REEL 3 -->
+          <div class="short-reel-card">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" loop muted playsinline preload="metadata">
+                <source src="video of makings/bespoke3.mp4" type="video/mp4">
+              </video>
+              <button type="button" class="reel-sound-badge" aria-label="Toggle Sound" title="Toggle Sound">
+                <span class="sound-icon">🔇</span>
+              </button>
+            </div>
+            <div class="reel-card-info">
+              <h3 class="reel-title">Organic Hand-Rubbed Finish</h3>
+              <p class="reel-desc">Multi-coat Italian polyurethane and natural teak oil highlighting authentic timber grain.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② OFFICIAL YOUTUBE SHORTS (8 VIDEOS) -->
+      <div class="atelier-view-pane" id="paneYoutube" style="display: none;">
+        <!-- Reel Category Filter Bar -->
+        <div class="reel-filter-bar">
+          <button type="button" class="reel-filter-btn active" data-filter="all">All Reels (8)</button>
+          <button type="button" class="reel-filter-btn" data-filter="living">Living Room (3)</button>
+          <button type="button" class="reel-filter-btn" data-filter="dining">Dining (3)</button>
+          <button type="button" class="reel-filter-btn" data-filter="bedroom">Bedroom (1)</button>
+          <button type="button" class="reel-filter-btn" data-filter="workshop">Atelier Joinery (1)</button>
+        </div>
+
+        <!-- 8 Official YouTube Shorts Grid -->
+        <div class="youtube-shorts-grid" id="ytShortsGrid">
         <!-- SHORT 1: LUXURY SOFA PROCESS -->
         <div class="yt-short-card" data-cat="living" data-video-id="lxhZF9s7fhY" data-title="Handcrafted Luxury Sofa Process">
           <div class="yt-short-thumb-wrapper">
@@ -553,6 +620,7 @@
             <span class="yt-short-cta">Watch Craft Reel &rarr;</span>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>

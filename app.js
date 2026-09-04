@@ -701,10 +701,36 @@ function updateShowingCount() {
 
 
 /* ==========================================================================
-   11. ATELIER WORKSHOP SHORTS CONTROLLER (Hover Play / Tap Toggle)
+   11. ATELIER WORKSHOP SHORTS CONTROLLER (Hover Play / Scroll Play)
    ========================================================================== */
 function initWorkshopShorts() {
   const reelCards = document.querySelectorAll('.short-reel-card');
+  const btnMaking = document.getElementById('btnModeMaking');
+  const btnYt = document.getElementById('btnModeYt');
+  const paneMaking = document.getElementById('paneMaking');
+  const paneYt = document.getElementById('paneYoutube');
+
+  // Mode Switcher between Live Workshop Making and YouTube Shorts
+  if (btnMaking && btnYt && paneMaking && paneYt) {
+    btnMaking.addEventListener('click', () => {
+      btnMaking.classList.add('active');
+      btnYt.classList.remove('active');
+      paneMaking.style.display = 'block';
+      paneYt.style.display = 'none';
+    });
+
+    btnYt.addEventListener('click', () => {
+      btnYt.classList.add('active');
+      btnMaking.classList.remove('active');
+      paneMaking.style.display = 'none';
+      paneYt.style.display = 'block';
+      // Pause any running workshop making videos
+      document.querySelectorAll('.reel-video').forEach(v => {
+        v.pause();
+        v.closest('.reel-video-wrapper')?.classList.remove('playing');
+      });
+    });
+  }
 
   const pauseAllOthers = (currentVideo) => {
     document.querySelectorAll('.reel-video').forEach(v => {
@@ -766,16 +792,26 @@ function initWorkshopShorts() {
       });
     }
 
-    // Auto-pause when scrolled out of viewport
+    // Auto-pause when scrolled out of viewport, auto-play on mobile when in view
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting && !video.paused) {
-            video.pause();
-            wrapper.classList.remove('playing');
+          if (!isHoverDevice) {
+            if (entry.isIntersecting && video.paused) {
+              pauseAllOthers(video);
+              video.play().then(() => wrapper.classList.add('playing')).catch(() => {});
+            } else if (!entry.isIntersecting && !video.paused) {
+              video.pause();
+              wrapper.classList.remove('playing');
+            }
+          } else {
+            if (!entry.isIntersecting && !video.paused) {
+              video.pause();
+              wrapper.classList.remove('playing');
+            }
           }
         });
-      }, { threshold: 0.25 });
+      }, { threshold: 0.5 });
       observer.observe(wrapper);
     }
   });
