@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileDrawer();
   init4AngleShowcase();
   initCategoryPills();
+  initDropdownFilterRouting();
   initQuickWhatsAppButtons();
   initBespokeWizard();
   initConsultationModal();
@@ -65,26 +66,41 @@ function init4AngleShowcase() {
 }
 
 /* ==========================================================================
-   2. CATEGORY PILL FILTERING (Living, Bedroom, Dining, Office)
+   2. CATEGORY FILTERING & DROPDOWN ROUTING (Living, Bedroom, Dining, Office)
    ========================================================================== */
-function initCategoryPills() {
+function applyCategoryFilter(filterVal) {
+  if (!filterVal) return;
+  // Clean filter value e.g. '#sofas', 'cat=sofas', etc.
+  const cleanFilter = filterVal.replace(/^[#?]/, '').replace(/^cat=/, '').split('#')[0].split('&')[0].trim().toLowerCase();
+  
   const catPills = document.querySelectorAll('.cat-pill');
   const cards = document.querySelectorAll('.collection-card');
 
-  if (!catPills.length || !cards.length) return;
+  // Update pills active state
+  let matchedAny = false;
+  catPills.forEach(p => {
+    const pillFilter = (p.getAttribute('data-filter') || '').toLowerCase();
+    if (pillFilter === cleanFilter || (cleanFilter === 'all' && pillFilter === 'all')) {
+      p.classList.add('active');
+      matchedAny = true;
+    } else {
+      p.classList.remove('active');
+    }
+  });
 
-  function applyFilter(filterVal) {
+  if (!matchedAny && (cleanFilter === 'all' || cleanFilter === '')) {
     catPills.forEach(p => {
-      if (p.getAttribute('data-filter') === filterVal) {
+      if ((p.getAttribute('data-filter') || '').toLowerCase() === 'all') {
         p.classList.add('active');
-      } else {
-        p.classList.remove('active');
       }
     });
+  }
 
+  // Filter cards with smooth fade
+  if (cards.length) {
     cards.forEach(card => {
-      const cardCat = card.getAttribute('data-cat');
-      if (filterVal === 'all' || cardCat === filterVal) {
+      const cardCat = (card.getAttribute('data-cat') || '').toLowerCase();
+      if (cleanFilter === 'all' || cleanFilter === '' || cardCat === cleanFilter) {
         card.style.display = 'flex';
         setTimeout(() => {
           card.style.opacity = '1';
@@ -100,52 +116,71 @@ function initCategoryPills() {
     });
     setTimeout(updateShowingCount, 220);
   }
+}
+window.applyCategoryFilter = applyCategoryFilter;
 
+function initCategoryPills() {
+  const catPills = document.querySelectorAll('.cat-pill');
   catPills.forEach(pill => {
     pill.addEventListener('click', (e) => {
       e.preventDefault();
       const filterVal = pill.getAttribute('data-filter');
-      applyFilter(filterVal);
+      applyCategoryFilter(filterVal);
+      if (filterVal) {
+        history.pushState(null, '', `#${filterVal}`);
+      }
     });
   });
+}
 
-  // Multi-Strategy Category Parameter Extraction (URL query, Hash, or SessionStorage)
-  const urlParams = new URLSearchParams(window.location.search);
-  let initialCat = urlParams.get('cat');
+function initDropdownFilterRouting() {
+  const handleCurrentUrlFilter = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    let cat = urlParams.get('cat');
 
-  if (!initialCat && window.location.hash) {
-    const rawHash = window.location.hash.replace('#', '');
-    if (rawHash.startsWith('cat=')) {
-      initialCat = rawHash.replace('cat=', '');
-    } else if (rawHash) {
-      initialCat = rawHash;
+    if (!cat && window.location.hash) {
+      const rawHash = window.location.hash.replace('#', '');
+      cat = rawHash.replace('cat=', '').split('&')[0];
     }
-  }
 
-  if (!initialCat) {
-    try {
-      const stored = sessionStorage.getItem('hfm_filter_cat');
-      if (stored) {
-        initialCat = stored;
-        sessionStorage.removeItem('hfm_filter_cat');
-      }
-    } catch (e) {}
-  }
+    if (!cat) {
+      try {
+        const stored = sessionStorage.getItem('hfm_filter_cat');
+        if (stored) {
+          cat = stored;
+          sessionStorage.removeItem('hfm_filter_cat');
+        }
+      } catch (e) {}
+    }
 
-  if (initialCat) {
-    applyFilter(initialCat);
-  }
+    if (cat) {
+      applyCategoryFilter(cat);
+    }
+  };
 
-  // Handle dropdown menu sub-links
+  handleCurrentUrlFilter();
+
   document.querySelectorAll('.dropdown-sub-link').forEach(link => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href') || '';
-      const [linkPage, linkQuery] = href.split('?');
+      if (!href) return;
+
+      const targetUrl = href.split('#')[0];
+      const hashPart = href.split('#')[1] || '';
+      const [targetPage, queryPart] = targetUrl.split('?');
       let cat = '';
-      if (linkQuery) {
-        const sp = new URLSearchParams(linkQuery);
+
+      if (queryPart) {
+        const sp = new URLSearchParams(queryPart);
         cat = sp.get('cat') || '';
       }
+      if (!cat && hashPart) {
+        cat = hashPart.replace(/^cat=/, '');
+      }
+
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      const cleanTarget = (targetPage || currentPath).replace('.html', '').toLowerCase();
+      const cleanCurrent = currentPath.replace('.html', '').toLowerCase();
 
       if (cat) {
         try {
@@ -153,21 +188,22 @@ function initCategoryPills() {
         } catch (err) {}
       }
 
-      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-      const cleanLinkPage = linkPage.replace('.html', '');
-      const cleanCurrentPage = currentPage.replace('.html', '');
-
-      if (cleanLinkPage === cleanCurrentPage || (cleanLinkPage === '' && cleanCurrentPage === 'index')) {
+      if (cleanTarget === cleanCurrent || (cleanTarget === '' && cleanCurrent === 'index')) {
         e.preventDefault();
         if (cat) {
-          applyFilter(cat);
+          applyCategoryFilter(cat);
           history.pushState(null, '', href);
-          const filterBar = document.querySelector('.category-filter-bar');
-          if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const filterBar = document.querySelector('.category-filter-bar') || document.querySelector('.collections-section');
+          if (filterBar) {
+            filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       }
     });
   });
+
+  window.addEventListener('popstate', handleCurrentUrlFilter);
+  window.addEventListener('hashchange', handleCurrentUrlFilter);
 }
 
 /* ==========================================================================
@@ -663,30 +699,51 @@ function updateShowingCount() {
 
 
 /* ==========================================================================
-   11. ATELIER WORKSHOP SHORTS CONTROLLER
+   11. ATELIER WORKSHOP SHORTS CONTROLLER (Hover Play / Tap Toggle)
    ========================================================================== */
 function initWorkshopShorts() {
-  const reelWrappers = document.querySelectorAll('.reel-video-wrapper');
-  reelWrappers.forEach(wrapper => {
-    const video = wrapper.querySelector('.reel-video');
-    const playOverlay = wrapper.querySelector('.reel-play-overlay');
-    const soundBadge = wrapper.querySelector('.reel-sound-badge');
-    const soundIcon = wrapper.querySelector('.sound-icon');
+  const reelCards = document.querySelectorAll('.short-reel-card');
 
-    if (!video) return;
+  const pauseAllOthers = (currentVideo) => {
+    document.querySelectorAll('.reel-video').forEach(v => {
+      if (v !== currentVideo) {
+        v.pause();
+        v.closest('.reel-video-wrapper')?.classList.remove('playing');
+      }
+    });
+  };
 
-    // Click on video / wrapper to toggle play/pause
+  reelCards.forEach(card => {
+    const wrapper = card.querySelector('.reel-video-wrapper');
+    const video = card.querySelector('.reel-video');
+    const soundBadge = card.querySelector('.reel-sound-badge');
+    const soundIcon = card.querySelector('.sound-icon');
+
+    if (!video || !wrapper) return;
+
+    // Desktop hover-to-play and leave-to-pause
+    const isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (isHoverDevice) {
+      card.addEventListener('mouseenter', () => {
+        pauseAllOthers(video);
+        const p = video.play();
+        if (p !== undefined) {
+          p.then(() => wrapper.classList.add('playing')).catch(() => {});
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+        wrapper.classList.remove('playing');
+      });
+    }
+
+    // Touch or click toggle fallback
     wrapper.addEventListener('click', (e) => {
       if (e.target.closest('.reel-sound-badge')) return;
-      
       if (video.paused) {
-        // Pause all other videos first
-        document.querySelectorAll('.reel-video').forEach(v => {
-          if (v !== video) {
-            v.pause();
-            v.closest('.reel-video-wrapper')?.classList.remove('playing');
-          }
-        });
+        pauseAllOthers(video);
         video.play().then(() => {
           wrapper.classList.add('playing');
         }).catch(() => {});
@@ -707,7 +764,7 @@ function initWorkshopShorts() {
       });
     }
 
-    // Auto-pause when out of viewport
+    // Auto-pause when scrolled out of viewport
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
