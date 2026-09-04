@@ -824,8 +824,6 @@ function initGrandPortalIntro() {
   const introEl = document.getElementById('grandPortalIntro');
   if (!introEl) return;
 
-  const skipBtn = document.getElementById('portalSkipBtn');
-
   // Prevent scrolling during door intro
   document.body.style.overflow = 'hidden';
 
@@ -846,25 +844,21 @@ function initGrandPortalIntro() {
     }, 2100);
   };
 
-  if (skipBtn) {
-    skipBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      introEl.classList.add('portal-hidden');
-      setTimeout(() => {
-        introEl.style.display = 'none';
-        document.body.style.overflow = '';
-      }, 350);
-    });
-  }
-
+  // Click or keypress anywhere enters immediately without waiting
   introEl.addEventListener('click', () => {
     dismissPortal();
   });
 
-  // Hold closed for 650ms so the user sees the grand wooden doors and gold seal, then swing open
+  window.addEventListener('keydown', (e) => {
+    if (!isDismissed && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
+      dismissPortal();
+    }
+  }, { once: true });
+
+  // Hold closed for 1100ms so the user appreciates the grand teak doors, royal H crest, and branding
   setTimeout(() => {
     dismissPortal();
-  }, 650);
+  }, 1100);
 }
 
 /* ==========================================================================

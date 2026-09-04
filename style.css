@@ -5762,37 +5762,6 @@ body, .site-header, .collection-card, .product-modal-container {
   pointer-events: none;
 }
 
-.portal-skip-btn {
-  position: absolute;
-  top: 2rem;
-  right: 2.5rem;
-  z-index: 1000000;
-  background: rgba(18, 30, 33, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  color: #D4AF37;
-  padding: 0.55rem 1.25rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  pointer-events: all;
-}
-
-.portal-skip-btn:hover {
-  background: #D4AF37;
-  color: #080E10;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
-}
-
 .portal-stage {
   position: relative;
   width: 100%;
@@ -5896,99 +5865,9 @@ body, .site-header, .collection-card, .product-modal-container {
   background: repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(212, 175, 55, 0.04) 18px, rgba(212, 175, 55, 0.04) 20px);
 }
 
-/* Door Handles */
-.door-handle {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 14px;
-  height: 120px;
-  z-index: 5;
-}
 
-.left-handle {
-  right: 24px;
-}
 
-.right-handle {
-  left: 24px;
-}
-
-.handle-plate {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, #D4AF37 0%, #8C6D1F 50%, #E8CA65 100%);
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-.handle-grip {
-  position: absolute;
-  top: 20px;
-  bottom: 20px;
-  left: -6px;
-  width: 10px;
-  background: #F5E9C9;
-  border-radius: 6px;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.5);
-}
-
-.right-handle .handle-grip {
-  left: auto;
-  right: -6px;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.5);
-}
-
-/* Central Embossed Seal Medallion */
-.seal-half {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 60px;
-  height: 120px;
-  overflow: hidden;
-  z-index: 6;
-}
-
-.seal-half-left {
-  right: 0;
-}
-
-.seal-half-right {
-  left: 0;
-}
-
-.seal-inner {
-  position: absolute;
-  top: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #E8CA65 0%, #B88E28 60%, #61480F 100%);
-  border: 3px solid #F7E7A9;
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.seal-half-left .seal-inner {
-  left: 0;
-}
-
-.seal-half-right .seal-inner {
-  right: 0;
-}
-
-.seal-monogram {
-  font-family: var(--font-serif);
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: #121E21;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
-}
-
-/* INTRO BRAND OVERLAY */
+/* INTRO BRAND CENTERPIECE (CRYSTAL-CLEAR & RAZOR-SHARP) */
 .portal-brand-overlay {
   position: absolute;
   top: 50%;
@@ -5998,75 +5877,127 @@ body, .site-header, .collection-card, .product-modal-container {
   z-index: 10;
   color: #FFFFFF;
   pointer-events: none;
-  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 90%;
-  max-width: 600px;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 92%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Deep vignette aura guaranteeing zero conflict with door woodgrain */
+  background: radial-gradient(ellipse at center, rgba(12, 8, 5, 0.92) 0%, rgba(12, 8, 5, 0.72) 58%, transparent 84%);
+  padding: 2.2rem 2.8rem;
+  border-radius: 24px;
 }
 
 .grand-portal-intro.opening .portal-brand-overlay {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+/* Distinct Royal Atelier Emblem (Signature "H") */
+.portal-emblem {
+  margin-bottom: 1.15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.emblem-crest {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2A1E14 0%, #120D0A 70%, #080605 100%);
+  border: 2.5px solid #E5C358;
+  box-shadow: 0 0 25px rgba(229, 195, 88, 0.45), inset 0 0 15px rgba(229, 195, 88, 0.25), 0 8px 24px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.emblem-crest::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(212, 175, 55, 0.45);
+  pointer-events: none;
+}
+
+.emblem-letter {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #F7E7A9;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 12px rgba(247, 231, 169, 0.5);
 }
 
 .portal-kicker {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 0.76rem;
-  letter-spacing: 0.3em;
-  color: #D4AF37;
-  margin-bottom: 0.85rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.32em;
+  color: #E5C358;
+  margin-bottom: 0.65rem;
   font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
 }
 
 .portal-title {
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 9vw, 5.2rem);
-  font-weight: 700;
+  font-size: clamp(3.2rem, 8vw, 5.2rem);
+  font-weight: 800;
   letter-spacing: 0.18em;
-  color: #F8F7F4;
+  color: #FFFFFF;
   margin: 0;
-  line-height: 1;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  line-height: 1.05;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
 }
 
 .portal-sub {
   font-family: var(--font-sans);
-  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
   letter-spacing: 0.4em;
-  color: #D4AF37;
-  font-weight: 300;
+  color: #F7E7A9;
+  font-weight: 700;
   display: block;
-  margin-top: 0.4rem;
+  margin-top: 0.55rem;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
 }
 
 .portal-divider {
-  margin: 1.25rem auto;
+  margin: 1.15rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  color: #D4AF37;
-  font-size: 0.85rem;
+  gap: 1.2rem;
+  color: #E5C358;
+  font-size: 0.9rem;
 }
 
 .portal-divider::before,
 .portal-divider::after {
   content: '';
-  width: 60px;
+  width: 70px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #D4AF37);
+  background: linear-gradient(90deg, transparent, #E5C358);
 }
 
 .portal-divider::after {
-  background: linear-gradient(90deg, #D4AF37, transparent);
+  background: linear-gradient(90deg, #E5C358, transparent);
 }
 
 .portal-caption {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.1rem;
-  color: #BAC6CB;
+  font-size: 1.18rem;
+  color: #E2E8F0;
+  letter-spacing: 0.04em;
   margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 /* ==========================================================================
