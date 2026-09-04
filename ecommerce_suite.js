@@ -125,13 +125,13 @@
       authDiv.setAttribute('aria-modal', 'true');
       authDiv.innerHTML = `
         <div class="auth-modal-card">
-          <button type="button" class="auth-modal-close" id="authModalClose" aria-label="Close Authentication Modal">&times;</button>
+          <button type="button" class="auth-modal-close" id="authModalClose" aria-label="Close Authentication Modal" title="Close Modal (Esc)">&times;</button>
           
           <!-- LEFT PANEL: The Atelier Invitation (Inspired by Hatil) -->
           <div class="auth-left-panel">
             <div class="auth-panel-glow"></div>
             <div class="auth-brand-emblem">
-              <img src="assets/heaven_official_badge.svg" alt="Heaven Furniture Mart Official Emblem" class="auth-logo-badge">
+              <img src="assets/heaven_official_badge.svg" alt="Heaven Furniture Mart Official Logo" class="auth-logo-badge">
             </div>
             <div>
               <h3 class="auth-panel-title">Welcome to The Atelier</h3>
@@ -166,7 +166,7 @@
             <!-- Fast Track Demo Button for Hackathon Judges -->
             <div class="auth-quick-demo-banner">
               <button type="button" class="vip-demo-login-btn" id="quickVipDemoBtn">
-                <span class="vip-sparkle">✨</span>
+                <span class="vip-sparkle">✦</span>
                 <div class="vip-text">
                   <strong>One-Click VIP Demo Access</strong>
                   <small>Instant sign-in as Dr. Tariqul Islam (Active Commission)</small>
@@ -318,12 +318,12 @@
           </div>
           
           <div class="search-chips-row">
-            <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-right: 4px;">Suggestions:</span>
-            <button type="button" class="search-chip" data-query="Burmese Teak">🪵 Burmese Teak</button>
-            <button type="button" class="search-chip" data-query="Sofa">🛋️ Royal Sofa</button>
-            <button type="button" class="search-chip" data-query="Dining">🍽️ Marble Dining</button>
-            <button type="button" class="search-chip" data-query="Bed">🛏️ Velvet Bed</button>
-            <button type="button" class="search-chip" data-query="Desk">💼 Executive Desk</button>
+            <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); margin-right: 4px; font-weight: 600;">Suggestions:</span>
+            <button type="button" class="search-chip" data-query="Burmese Teak">Burmese Teak</button>
+            <button type="button" class="search-chip" data-query="Sofa">Living Suites</button>
+            <button type="button" class="search-chip" data-query="Dining">Marble Dining</button>
+            <button type="button" class="search-chip" data-query="Bed">Bedroom Suites</button>
+            <button type="button" class="search-chip" data-query="Desk">Executive Desks</button>
           </div>
 
           <div class="search-results-list" id="searchResultsContainer">
@@ -340,7 +340,7 @@
       toast.id = 'atelierToast';
       toast.className = 'atelier-toast';
       toast.innerHTML = `
-        <span class="toast-icon">✨</span>
+        <span class="toast-icon">✦</span>
         <span class="toast-msg" id="atelierToastMsg">Item updated</span>
       `;
       document.body.appendChild(toast);
@@ -367,14 +367,6 @@
     const wishBtn = document.getElementById('headerWishlistBtn');
     if (wishBtn) {
       wishBtn.addEventListener('click', openWishlistDrawer);
-    }
-
-    // Compare Button (Regal Inspiration)
-    const compareBtn = document.getElementById('headerCompareBtn');
-    if (compareBtn) {
-      compareBtn.addEventListener('click', () => {
-        showToast('⚖️ Spec Comparator: Select any 2 pieces to compare timber density & joinery side-by-side.');
-      });
     }
 
     // Profile Trigger Button
@@ -468,12 +460,30 @@
     const pwdInput = document.getElementById('authPassword');
     const forgotLink = document.getElementById('forgotPwdLink');
 
-    if (closeBtn) closeBtn.addEventListener('click', closeAuthModal);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeAuthModal();
+      });
+    }
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) closeAuthModal();
       });
     }
+
+    // Global unconditional click listener for auth modal close button
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#authModalClose') || e.target.id === 'authModalClose') {
+        e.preventDefault();
+        e.stopPropagation();
+        closeAuthModal();
+      }
+      if (e.target.id === 'authModal') {
+        closeAuthModal();
+      }
+    });
 
     // Toggle Sign In vs Sign Up mode
     if (toggleModeBtn) {
@@ -488,7 +498,7 @@
       pwdToggleBtn.addEventListener('click', () => {
         const type = pwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
         pwdInput.setAttribute('type', type);
-        pwdToggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
+        pwdToggleBtn.textContent = type === 'password' ? 'Show' : 'Hide';
       });
     }
 
@@ -496,7 +506,7 @@
     if (forgotLink) {
       forgotLink.addEventListener('click', (e) => {
         e.preventDefault();
-        showToast('🔑 Verification PIN dispatched to your email & WhatsApp.');
+        showToast('Verification PIN dispatched to your email & WhatsApp.');
       });
     }
 
@@ -514,7 +524,7 @@
           saveWishlist();
         }
         closeAuthModal();
-        showToast(`✨ Welcome back, ${VIP_DEMO_CLIENT.name}! VIP Atelier portal active.`);
+        showToast(`Welcome back, ${VIP_DEMO_CLIENT.name}! VIP Atelier portal active.`);
       });
     }
 
