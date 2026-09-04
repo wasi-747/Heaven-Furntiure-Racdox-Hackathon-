@@ -64,11 +64,18 @@
                   </div>
                 </div>
 
-                <!-- Action Button -->
-                <div class="modal-action-bar">
-                  <a href="#" id="modalWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-gold btn-block modal-wa-btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                    <span>Ask a question on WhatsApp</span>
+                <!-- Action Buttons: Add to Bag, Wishlist, WhatsApp -->
+                <div class="modal-action-bar" style="display: flex; gap: 0.6rem; align-items: center; margin-top: 1.25rem;">
+                  <button type="button" id="modalAddToCartBtn" class="btn btn-gold" style="flex: 1.4; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span>Add to Atelier Bag</span>
+                  </button>
+                  <button type="button" id="modalWishlistBtn" class="btn btn-outline-gold" style="width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;" title="Save to Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  </button>
+                  <a href="#" id="modalWhatsAppBtn" target="_blank" rel="noopener" class="btn btn-outline-gold modal-wa-btn" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-2.128-.536-1.745-.729-2.876-2.518-2.964-2.634-.088-.117-.714-.95-.714-1.815 0-.866.452-1.291.613-1.468.161-.177.352-.222.469-.222.117 0 .235.001.338.006.109.005.255-.042.399.303.149.356.51 1.246.554 1.335.044.089.073.193.015.309-.059.117-.088.19-.176.294-.088.104-.185.233-.264.313-.088.089-.18.186-.078.361.103.175.457.755.981 1.222.674.6 1.243.786 1.418.874.176.088.279.074.382-.045.103-.117.44-.514.558-.69.117-.176.235-.147.396-.088.161.059 1.026.484 1.202.572.176.088.293.132.338.206.044.074.044.43-.1 1.035z"/></svg>
+                    <span>WhatsApp</span>
                   </a>
                 </div>
 
@@ -91,6 +98,27 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
     });
+
+    // eCommerce button bindings
+    let activeModalPiece = null;
+    const addCartBtn = document.getElementById('modalAddToCartBtn');
+    const addWishBtn = document.getElementById('modalWishlistBtn');
+
+    if (addCartBtn) {
+      addCartBtn.addEventListener('click', () => {
+        if (window.HFM_ECOMMERCE && window.__activeModalPiece) {
+          window.HFM_ECOMMERCE.addToCart(window.__activeModalPiece);
+        }
+      });
+    }
+
+    if (addWishBtn) {
+      addWishBtn.addEventListener('click', () => {
+        if (window.HFM_ECOMMERCE && window.__activeModalPiece) {
+          window.HFM_ECOMMERCE.addToWishlist(window.__activeModalPiece);
+        }
+      });
+    }
 
     function closeModal() {
       modal.classList.remove('open');
@@ -118,11 +146,12 @@
     });
   }
 
-  window.openProductModalById = function (pieceId) {
+  window.openProductDetailModal = function (pieceId) {
     if (!window.HEAVEN_PIECES) return;
     const piece = window.HEAVEN_PIECES.find((p) => p.id === pieceId);
     if (piece) showPieceInModal(piece);
   };
+  window.openProductModalById = window.openProductDetailModal;
 
   function openCardDetails(card) {
     // 1. Check if card image matches an official piece ID
@@ -174,6 +203,7 @@
   function showPieceInModal(piece) {
     const modal = document.getElementById('productDetailModal');
     if (!modal) return;
+    window.__activeModalPiece = piece;
 
     // Populate Fields
     document.getElementById('modalProductImg').src = piece.image;

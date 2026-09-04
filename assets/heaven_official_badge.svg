@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Radial luxury ambient gradient matching the official YouTube channel emblem -->
+    <radialGradient id="badgeBg" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#315552" />
+      <stop offset="55%" stop-color="#243F3C" />
+      <stop offset="100%" stop-color="#142624" />
+    </radialGradient>
+    
+    <!-- Metallic architectural gold gradient for the stylized 'A' -->
+    <linearGradient id="goldArchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE185" />
+      <stop offset="35%" stop-color="#EAA82C" />
+      <stop offset="70%" stop-color="#C88E20" />
+      <stop offset="100%" stop-color="#FCE185" />
+    </linearGradient>
+
+    <!-- Subtle gold rim gradient -->
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C358" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#9E7D2B" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#E5C358" stop-opacity="0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Forest-Teal Base Circle from Official Channel -->
+  <circle cx="100" cy="100" r="96" fill="url(#badgeBg)" stroke="url(#goldRim)" stroke-width="2.5" />
+  <circle cx="100" cy="100" r="91" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" stroke-dasharray="3 3" />
+
+  <!-- MAIN BRANDMARK: HEAVEN with the iconic Stylized Golden 'A' -->
+  <g id="brandmark">
+    <!-- "HE" in Pure Crisp White -->
+    <text x="35" y="103" 
+          font-family="'Cinzel', 'Montserrat', 'Inter', -apple-system, sans-serif" 
+          font-weight="900" 
+          font-size="33" 
+          letter-spacing="0.5" 
+          fill="#FFFFFF">HE</text>
+
+    <!-- Stylized Architectural 'A' Chevron/Truss from Official Logo -->
+    <g id="stylizedA">
+      <!-- Left diagonal leg -->
+      <path d="M85.5 106 L97.5 73.5 L102.5 73.5 L114.5 106 H106.5 L104.2 99.5 H95.8 L93.5 106 Z" 
+            fill="url(#goldArchGrad)" />
+      <!-- Distinctive Extended Architectural Crossbar -->
+      <rect x="91" y="90" width="18" height="4.2" rx="1" fill="url(#goldArchGrad)" />
+      <!-- Inner cutout triangle -->
+      <polygon points="100,81 97.2,93 102.8,93" fill="#243F3C" />
+    </g>
+
+    <!-- "VEN" in Pure Crisp White -->
+    <text x="115" y="103" 
+          font-family="'Cinzel', 'Montserrat', 'Inter', -apple-system, sans-serif" 
+          font-weight="900" 
+          font-size="33" 
+          letter-spacing="0.5" 
+          fill="#FFFFFF">VEN</text>
+
+    <!-- "FURNITURE MART" Subtitle -->
+    <text x="100" y="122" 
+          font-family="'Montserrat', 'Inter', sans-serif" 
+          font-weight="800" 
+          font-size="10.5" 
+          letter-spacing="2.8" 
+          text-anchor="middle" 
+          fill="#FFFFFF">FURNITURE MART</text>
+  </g>
+</svg>
