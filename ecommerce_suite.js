@@ -246,10 +246,10 @@
       cartDiv.innerHTML = `
         <div class="drawer-header-row">
           <div class="drawer-title-group">
-            <h3 class="drawer-heading">Atelier Bag</h3>
-            <span class="client-vip-badge" id="cartDrawerBadge">0 Items</span>
+            <h3 class="drawer-heading">Curated Room Blueprint</h3>
+            <span class="client-vip-badge" id="cartDrawerBadge">0 Pieces</span>
           </div>
-          <button type="button" class="drawer-close-btn" id="cartDrawerClose" aria-label="Close Bag">&times;</button>
+          <button type="button" class="drawer-close-btn" id="cartDrawerClose" aria-label="Close Blueprint">&times;</button>
         </div>
 
         <div class="drawer-content-scroll" id="cartDrawerItems">
@@ -258,16 +258,20 @@
 
         <div class="drawer-footer-box" id="cartDrawerFooter">
           <div class="drawer-subtotal-row">
-            <span>Estimated Total:</span>
+            <span>Estimated Atelier Investment:</span>
             <strong class="drawer-total-amount" id="cartDrawerTotal">৳0</strong>
           </div>
           <div class="drawer-advance-hint">
-            50% Production Advance: <strong id="cartDrawerAdvance">৳0</strong> · Balance upon delivery & assembly.
+            50% Production Milestone Advance · 50% upon white-glove inspection & assembly in your residence.
           </div>
           <a href="#" class="drawer-whatsapp-btn" id="cartCheckoutWaBtn" target="_blank" rel="noopener">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-2.128-.536-1.745-.729-2.876-2.518-2.964-2.634-.088-.117-.714-.95-.714-1.815 0-.866.452-1.291.613-1.468.161-.177.352-.222.469-.222.117 0 .235.001.338.006.109.005.255-.042.399.303.149.356.51 1.246.554 1.335.044.089.073.193.015.309-.059.117-.088.19-.176.294-.088.104-.185.233-.264.313-.088.089-.18.186-.078.361.103.175.457.755.981 1.222.674.6 1.243.786 1.418.874.176.088.279.074.382-.045.103-.117.44-.514.558-.69.117-.176.235-.147.396-.088.161.059 1.026.484 1.202.572.176.088.293.132.338.206.044.074.044.43-.1 1.035z"/></svg>
-            <span>Confirm Blueprint with Concierge</span>
+            <span>Send Blueprint to WhatsApp Concierge</span>
           </a>
+          <button type="button" class="drawer-walkthrough-btn" id="cartBookWalkthroughBtn" style="width: 100%; margin-top: 0.6rem; padding: 0.8rem; background: transparent; border: 1px solid var(--color-gold); color: var(--color-gold); border-radius: 8px; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.04em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.25s ease;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Book Showroom Walkthrough for These Pieces</span>
+          </button>
         </div>
       `;
       document.body.appendChild(cartDiv);
@@ -597,9 +601,22 @@
     const drawer = document.getElementById('cartDrawer');
     const closeBtn = document.getElementById('cartDrawerClose');
     const backdrop = document.getElementById('atelierDrawerBackdrop');
+    const walkthroughBtn = document.getElementById('cartBookWalkthroughBtn');
 
     if (closeBtn) closeBtn.addEventListener('click', closeCartDrawer);
     if (backdrop) backdrop.addEventListener('click', closeAllModalsAndDrawers);
+    if (walkthroughBtn) {
+      walkthroughBtn.addEventListener('click', () => {
+        closeCartDrawer();
+        const modal = document.getElementById('consultationModal');
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        } else {
+          window.location.href = 'showroom.html';
+        }
+      });
+    }
   }
 
   function openCartDrawer() {
@@ -625,21 +642,22 @@
     const footer = document.getElementById('cartDrawerFooter');
     const badge = document.getElementById('cartDrawerBadge');
     const totalEl = document.getElementById('cartDrawerTotal');
-    const advanceEl = document.getElementById('cartDrawerAdvance');
     const waBtn = document.getElementById('cartCheckoutWaBtn');
 
     if (!container) return;
 
-    if (badge) badge.textContent = `${cart.length} ${cart.length === 1 ? 'Item' : 'Items'}`;
+    if (badge) badge.textContent = `${cart.length} ${cart.length === 1 ? 'Piece' : 'Pieces'}`;
 
     if (cart.length === 0) {
       container.innerHTML = `
         <div class="drawer-empty-view">
-          <div class="empty-drawer-icon">🛍️</div>
-          <h4 class="empty-drawer-title">Your Atelier Bag is Empty</h4>
-          <p class="empty-drawer-desc">You haven't commissioned or added any bespoke furniture pieces yet.</p>
+          <div class="empty-drawer-icon" style="margin-bottom: 1rem; color: var(--color-gold);">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h4 class="empty-drawer-title">No Pieces in Room Blueprint</h4>
+          <p class="empty-drawer-desc">Curate architectural furniture pieces to build your residence floorplan and request a tailored 3D CAD proposal.</p>
           <button type="button" class="btn btn-gold" id="seedDemoCartBtn" style="font-size: 0.82rem; padding: 0.7rem 1.3rem;">
-            <span>⚡ Add Royal Sofa Pair (Demo)</span>
+            <span>Curate Sample Living Room Suite</span>
           </button>
         </div>
       `;
@@ -650,7 +668,7 @@
         seedBtn.addEventListener('click', () => {
           cart.push(SAMPLE_CART_ITEM);
           saveCart();
-          showToast('Added Royal Sofa Pair to Atelier Bag!');
+          showToast('Sample suite added to your Room Blueprint!');
         });
       }
       return;
@@ -677,7 +695,7 @@
               <button type="button" class="qty-btn cart-qty-plus" data-index="${index}">+</button>
             </div>
           </div>
-          <button type="button" class="drawer-item-remove cart-item-del" data-index="${index}" title="Remove piece">&times;</button>
+          <button type="button" class="drawer-item-remove cart-item-del" data-index="${index}" title="Remove piece from blueprint">&times;</button>
         </div>
       `;
     });
@@ -685,12 +703,11 @@
     container.innerHTML = html;
 
     if (totalEl) totalEl.textContent = `৳${total.toLocaleString('en-IN')}`;
-    if (advanceEl) advanceEl.textContent = `৳${Math.round(total * 0.5).toLocaleString('en-IN')}`;
 
-    // WhatsApp Message payload
+    // WhatsApp Message payload formatted as architectural room consultation
     if (waBtn) {
-      const summaryList = cart.map(i => `• ${i.name} (Qty: ${i.qty || 1}) - ৳${(i.price * (i.qty || 1)).toLocaleString('en-IN')}`).join('%0A');
-      const waText = `Hi Heaven Furniture Mart,%0A%0AI would like to commission the following bespoke furniture order:%0A${summaryList}%0A%0AEstimated Total: ৳${total.toLocaleString('en-IN')}%0AClient: ${currentUser ? currentUser.name : 'Guest Client'}%0APlease confirm blueprint schedule.`;
+      const summaryList = cart.map(i => `• ${i.name} (Qty: ${i.qty || 1}) - Est: ৳${(i.price * (i.qty || 1)).toLocaleString('en-IN')}`).join('%0A');
+      const waText = `Assalamu Alaikum Heaven Furniture Mart,%0A%0AI have curated this custom Room Blueprint for my residence in Chattogram:%0A${summaryList}%0A%0AEstimated Investment: ৳${total.toLocaleString('en-IN')}%0AClient: ${currentUser ? currentUser.name : 'Valued Patron'}%0A%0APlease share the 3D layout consultation schedule and timber seasoning verification.`;
       waBtn.href = `https://wa.me/8801960481983?text=${waText}`;
     }
 
@@ -720,7 +737,7 @@
         const idx = parseInt(btn.getAttribute('data-index'), 10);
         const removed = cart.splice(idx, 1);
         saveCart();
-        showToast(`Removed ${removed[0]?.name || 'item'} from bag.`);
+        showToast(`Removed ${removed[0]?.name || 'piece'} from Room Blueprint.`);
       });
     });
   }
@@ -762,11 +779,13 @@
     if (wishlist.length === 0) {
       container.innerHTML = `
         <div class="drawer-empty-view">
-          <div class="empty-drawer-icon">❤️</div>
+          <div class="empty-drawer-icon" style="margin-bottom: 1rem; color: var(--color-gold);">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </div>
           <h4 class="empty-drawer-title">No Saved Blueprints</h4>
-          <p class="empty-drawer-desc">Click the heart icon on any sofa, bed or dining set to save it to your bespoke shortlist.</p>
+          <p class="empty-drawer-desc">Click the bookmark or heart icon on any bespoke sofa, bed or dining set to save it to your curated shortlist.</p>
           <button type="button" class="btn btn-gold" id="seedDemoWishBtn" style="font-size: 0.82rem; padding: 0.7rem 1.3rem;">
-            <span>⚡ Save Imperial Marble Table (Demo)</span>
+            <span>Save Imperial Marble Suite (Demo)</span>
           </button>
         </div>
       `;
@@ -776,7 +795,7 @@
         seedBtn.addEventListener('click', () => {
           wishlist.push(SAMPLE_WISHLIST_ITEM);
           saveWishlist();
-          showToast('Added Imperial Marble Suite to Wishlist!');
+          showToast('Added Imperial Marble Suite to Saved Blueprints!');
         });
       }
       return;
@@ -792,7 +811,7 @@
             <span class="drawer-item-price">৳${item.price.toLocaleString('en-IN')}</span>
             <div style="margin-top: 6px;">
               <button type="button" class="btn btn-gold wish-move-to-cart" data-index="${index}" style="font-size: 0.72rem; padding: 4px 10px;">
-                <span>+ Move to Bag</span>
+                <span>+ Add to Room Blueprint</span>
               </button>
             </div>
           </div>
@@ -816,7 +835,7 @@
         });
         saveWishlist();
         saveCart();
-        showToast(`Moved ${item.name} to your Atelier Bag!`);
+        showToast(`Added ${item.name} to your Room Blueprint!`);
       });
     });
 
@@ -1043,7 +1062,7 @@
           });
         }
         saveCart();
-        showToast(`Added ${piece.name} to Atelier Bag!`);
+        showToast(`Added ${piece.name} to Room Blueprint!`);
         openCartDrawer();
       },
       addToWishlist: (piece) => {

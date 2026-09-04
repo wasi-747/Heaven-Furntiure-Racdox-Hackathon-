@@ -1002,3 +1002,46 @@ window.jumpShowroomTour = function(seconds) {
   }
 };
 
+/* ==========================================================================
+   14. BESPOKE ATELIER CLIENT QUERY CLARIFIER (FAQ ACCORDION)
+   ========================================================================== */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-accordion-item');
+  if (!faqItems.length) return;
+
+  faqItems.forEach((item, idx) => {
+    const btn = item.querySelector('.faq-question-btn');
+    const panel = item.querySelector('.faq-answer-panel');
+    if (!btn || !panel) return;
+
+    // Open first item by default for inviting discovery
+    if (idx === 0) {
+      item.classList.add('active');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+
+    btn.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+
+      // Close all other items
+      faqItems.forEach(other => {
+        if (other !== item) {
+          other.classList.remove('active');
+          const otherPanel = other.querySelector('.faq-answer-panel');
+          if (otherPanel) otherPanel.style.maxHeight = null;
+        }
+      });
+
+      // Toggle current item
+      if (isActive) {
+        item.classList.remove('active');
+        panel.style.maxHeight = null;
+      } else {
+        item.classList.add('active');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+}
+
+
