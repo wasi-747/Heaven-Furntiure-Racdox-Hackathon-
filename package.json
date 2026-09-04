@@ -1,0 +1,20 @@
+{
+  "name": "heaven-furniture-mart",
+  "version": "1.0.0",
+  "description": "Heaven Furniture Mart — Bespoke Luxury Architectural Atelier",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve -l 3000",
+    "start": "npx serve -l 3000",
+    "serve": "npx serve -l 3000",
+    "py": "python -m http.server 3000"
+  },
+  "keywords": [
+    "furniture",
+    "luxury",
+    "atelier",
+    "heaven-furniture-mart"
+  ],
+  "author": "Heaven Furniture Mart",
+  "license": "ISC"
+}
