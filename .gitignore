@@ -1,6 +1,13 @@
+# Reference screenshot folders provided for design inspiration
+Hatil/
+hatil and regal/
+ui fixing needed/
+
+# Local testing & dev scripts
 .playwright-mcp/
 node_modules/
-*.pyc
+*.py
 __pycache__/
+*.pyc
 .DS_Store
 Thumbs.db
