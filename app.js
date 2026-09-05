@@ -1068,15 +1068,206 @@ function initAtelier3dStudio() {
   const btnResetCamera = document.getElementById('btnResetCamera');
 
   // Customizer State
+  let activeColorKey = 'gold';
+  let activeWoodKey = 'teak';
   let selectedFabricName = 'Original Royal Brocade';
-  let selectedFabricRgb = [1, 1, 1, 1];
   let selectedWoodName = 'Chittagong Teak (Natural Honey)';
-  let selectedWoodRgb = [1, 1, 1, 1];
 
   const fabricSwatches = document.querySelectorAll('#fabricSwatches .swatch-btn');
   const activeFabricNameEl = document.getElementById('activeFabricName');
   const woodSwatches = document.querySelectorAll('#woodSwatches .wood-pill-btn');
   const activeWoodNameEl = document.getElementById('activeWoodName');
+
+  // High-fidelity PBR presets tuned for photorealistic materials
+  const fabricPresets = {
+    gold: {
+      name: 'Original Royal Brocade',
+      chair: { color: [1.0, 1.0, 1.0], sheen: [0.2, 0.0, 1.0] },
+      sofa1: { variant: 'Champagne', color: [0.85, 0.70, 0.45], sheen: [0.9, 0.7, 0.5] },
+      sofa2: { color: [1.0, 0.85, 0.60], sheen: [0.8, 0.7, 0.5] }
+    },
+    emerald: {
+      name: 'Royal Emerald Velvet',
+      chair: { color: [0.08, 0.45, 0.22], sheen: [0.1, 0.9, 0.3] },
+      sofa1: { variant: 'Champagne', color: [0.05, 0.65, 0.22], sheen: [0.1, 0.9, 0.35] },
+      sofa2: { color: [0.10, 0.75, 0.28], sheen: [0.2, 0.95, 0.4] }
+    },
+    sapphire: {
+      name: 'Midnight Sapphire Blue',
+      chair: { color: [0.10, 0.22, 0.65], sheen: [0.1, 0.4, 1.0] },
+      sofa1: { variant: 'Navy', color: [0.08, 0.22, 0.75], sheen: [0.1, 0.4, 1.0] },
+      sofa2: { color: [0.20, 0.45, 1.25], sheen: [0.3, 0.6, 1.5] }
+    },
+    crimson: {
+      name: 'Bordeaux Crimson Red',
+      chair: { color: [0.65, 0.08, 0.15], sheen: [1.0, 0.2, 0.3] },
+      sofa1: { variant: 'Pale Pink', color: [0.40, 0.02, 0.06], sheen: [0.60, 0.05, 0.12] },
+      sofa2: { color: [0.80, 0.10, 0.18], sheen: [0.9, 0.2, 0.3] }
+    },
+    black: {
+      name: 'Smoked Charcoal Black',
+      chair: { color: [0.15, 0.15, 0.15], sheen: [0.2, 0.2, 0.2] },
+      sofa1: { variant: 'Black', color: [0.04, 0.04, 0.04], sheen: [0.1, 0.1, 0.1] },
+      sofa2: { color: [0.18, 0.18, 0.18], sheen: [0.2, 0.2, 0.2] }
+    },
+    cream: {
+      name: 'Ivory Alabaster Cream',
+      chair: { color: [0.95, 0.92, 0.85], sheen: [1.0, 0.95, 0.9] },
+      sofa1: { variant: 'Gray', color: [0.92, 0.90, 0.85], sheen: [0.9, 0.92, 0.95] },
+      sofa2: { color: [1.15, 1.10, 1.00], sheen: [1.0, 0.95, 0.9] }
+    }
+  };
+
+  const woodPresets = {
+    teak: {
+      name: 'Chittagong Teak (Natural Honey)',
+      chair: [1.0, 1.0, 1.0],
+      sofa1: [0.90, 0.65, 0.35],
+      sofa2: [1.0, 1.0, 1.0]
+    },
+    walnut: {
+      name: 'Smoked Walnut (Dark Cocoa)',
+      chair: [0.45, 0.35, 0.28],
+      sofa1: [0.25, 0.18, 0.14],
+      sofa2: [0.45, 0.35, 0.28]
+    },
+    mahogany: {
+      name: 'Antique Mahogany (Rich Amber)',
+      chair: [0.72, 0.38, 0.26],
+      sofa1: [0.65, 0.30, 0.18],
+      sofa2: [0.60, 0.25, 0.14]
+    }
+  };
+
+  function getFabricKey(name) {
+    const s = (name || '').toLowerCase();
+    if (s.includes('sapphire') || s.includes('blue')) return 'sapphire';
+    if (s.includes('emerald') || s.includes('green')) return 'emerald';
+    if (s.includes('crimson') || s.includes('red') || s.includes('bordeaux')) return 'crimson';
+    if (s.includes('black') || s.includes('charcoal')) return 'black';
+    if (s.includes('cream') || s.includes('ivory') || s.includes('alabaster')) return 'cream';
+    return 'gold';
+  }
+
+  function getWoodKey(name) {
+    const s = (name || '').toLowerCase();
+    if (s.includes('walnut')) return 'walnut';
+    if (s.includes('mahogany')) return 'mahogany';
+    return 'teak';
+  }
+
+  // Safely locate Three.js internal scene graph
+  function getThreeScene() {
+    try {
+      const symbols = Object.getOwnPropertySymbols(viewer);
+      const sym = symbols.find(s => s.toString().includes('scene'));
+      return sym ? viewer[sym] : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // Real-time Material Shader Application
+  async function applyMaterialsToViewer() {
+    if (!viewer) return;
+
+    const isChair = (viewer.src || '').includes('Chair');
+    const isSofa1 = (viewer.src || '').includes('GlamVelvet');
+    const isSofa2 = (viewer.src || '').includes('SheenWood');
+
+    const fData = fabricPresets[activeColorKey] || fabricPresets.gold;
+    const wData = woodPresets[activeWoodKey] || woodPresets.teak;
+
+    // 1. If Model 02 has glTF variants, set the base variant first
+    if (isSofa1 && fData.sofa1 && fData.sofa1.variant) {
+      if (viewer.availableVariants && viewer.availableVariants.includes(fData.sofa1.variant)) {
+        if (viewer.variantName !== fData.sofa1.variant) {
+          viewer.variantName = fData.sofa1.variant;
+          await new Promise(r => setTimeout(r, 120));
+        }
+      }
+    }
+
+    // 2. Direct Three.js Shader Material Modification (Instant & 100% Reliable across all 3 models)
+    const scene = getThreeScene();
+    if (scene) {
+      scene.traverse(obj => {
+        if (!obj.isMesh || !obj.material) return;
+        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+
+        mats.forEach(mat => {
+          if (!mat || !mat.color) return;
+          const mn = (mat.name || obj.name || '').toLowerCase();
+
+          // A. ChairDamaskPurplegold.glb
+          if (isChair) {
+            if (mn.includes('fabric')) {
+              mat.color.setRGB(...fData.chair.color);
+              if (mat.sheenColor) mat.sheenColor.setRGB(...fData.chair.sheen);
+              mat.needsUpdate = true;
+            } else if (mn.includes('wood')) {
+              mat.color.setRGB(...wData.chair);
+              mat.needsUpdate = true;
+            }
+          }
+
+          // B. GlamVelvetSofa.glb
+          else if (isSofa1) {
+            if (mn.includes('fabric')) {
+              mat.color.setRGB(...fData.sofa1.color);
+              if (mat.sheenColor) mat.sheenColor.setRGB(...fData.sofa1.sheen);
+              mat.needsUpdate = true;
+            } else if (mn.includes('leg') || mn.includes('feet')) {
+              mat.color.setRGB(...wData.sofa1);
+              mat.needsUpdate = true;
+            }
+          }
+
+          // C. SheenWoodLeatherSofa.glb
+          else if (isSofa2) {
+            if (['brown', 'paisley', 'striped', 'fringe', 'frame_fabric'].includes(mn)) {
+              mat.color.setRGB(...fData.sofa2.color);
+              if (mat.sheenColor) mat.sheenColor.setRGB(...fData.sofa2.sheen);
+              mat.needsUpdate = true;
+            } else if (mn === 'frame') {
+              mat.color.setRGB(...wData.sofa2);
+              mat.needsUpdate = true;
+            }
+          }
+        });
+      });
+
+      if (typeof scene.queueRender === 'function') {
+        scene.queueRender();
+      }
+    }
+
+    // 3. Fallback / Complement via Model-Viewer Public API (Safe try-catch)
+    try {
+      if (viewer.model && viewer.model.materials) {
+        for (const mat of viewer.model.materials) {
+          if (typeof mat.ensureLoaded === 'function' && !mat.isLoaded) {
+            await mat.ensureLoaded();
+          }
+          const n = (mat.name || '').toLowerCase();
+          if (isChair) {
+            if (n.includes('fabric') && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...fData.chair.color, 1]);
+            } else if (n.includes('wood') && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...wData.chair, 1]);
+            }
+          }
+        }
+      }
+    } catch (_) {}
+  }
+
+  // Ensure materials re-apply whenever a model finishes loading
+  viewer.addEventListener('load', () => {
+    setTimeout(() => {
+      applyMaterialsToViewer();
+    }, 100);
+  });
 
   // Track currently active piece for Room Blueprint Cart integration
   let currentActivePiece = {
@@ -1087,39 +1278,18 @@ function initAtelier3dStudio() {
     image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
   };
 
-  // Real-time Material Shader Application
-  function applyMaterialsToViewer() {
-    if (!viewer || !viewer.model) return;
-
-    // 1. Apply Upholstery / Velvet Shade
-    const fabricMaterials = viewer.model.materials.filter(m => {
-      const n = (m.name || '').toLowerCase();
-      return n === 'fabric' || n.includes('fabric') || n === 'brown' || n === 'paisley' || n === 'striped' || n === 'fringe';
-    });
-
-    fabricMaterials.forEach(m => {
-      if (m.pbrMetallicRoughness) {
-        m.pbrMetallicRoughness.setBaseColorFactor(selectedFabricRgb);
-      }
-    });
-
-    // 2. Apply Hardwood Stain Tone
-    const woodMaterials = viewer.model.materials.filter(m => {
-      const n = (m.name || '').toLowerCase();
-      return n === 'wood' || n === 'frame' || n.includes('legs') || n.includes('feet');
-    });
-
-    woodMaterials.forEach(m => {
-      if (m.pbrMetallicRoughness) {
-        m.pbrMetallicRoughness.setBaseColorFactor(selectedWoodRgb);
-      }
-    });
+  function updatePieceCartInfo() {
+    const title = modelTitle ? modelTitle.textContent.trim() : 'Bespoke Piece';
+    const priceText = modelPrice ? modelPrice.textContent.trim() : '120000';
+    const woodText = modelWood ? modelWood.textContent.trim() : 'Chittagong Teak';
+    currentActivePiece = {
+      id: `3d_${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+      name: `${title} (${selectedFabricName})`,
+      price: parseInt(priceText.replace(/[^0-9]/g, '').slice(0, 6)) || 120000,
+      timber: `${woodText} · ${selectedWoodName}`,
+      image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
+    };
   }
-
-  // Ensure materials re-apply whenever a model finishes loading
-  viewer.addEventListener('load', () => {
-    applyMaterialsToViewer();
-  });
 
   function updateWhatsAppPrefill() {
     if (!btnWaInquire) return;
@@ -1135,13 +1305,12 @@ function initAtelier3dStudio() {
       btn.classList.add('active');
 
       const name = btn.getAttribute('data-name');
-      const rgbStr = btn.getAttribute('data-rgb');
-      const parts = rgbStr.split(',').map(Number);
-      selectedFabricRgb = [parts[0], parts[1], parts[2], 1.0];
-      selectedFabricName = name;
+      activeColorKey = btn.getAttribute('data-color-key') || getFabricKey(name);
+      selectedFabricName = fabricPresets[activeColorKey]?.name || name;
 
-      if (activeFabricNameEl) activeFabricNameEl.textContent = name;
+      if (activeFabricNameEl) activeFabricNameEl.textContent = selectedFabricName;
       applyMaterialsToViewer();
+      updatePieceCartInfo();
       updateWhatsAppPrefill();
     });
   });
@@ -1153,13 +1322,12 @@ function initAtelier3dStudio() {
       btn.classList.add('active');
 
       const name = btn.getAttribute('data-name');
-      const rgbStr = btn.getAttribute('data-rgb');
-      const parts = rgbStr.split(',').map(Number);
-      selectedWoodRgb = [parts[0], parts[1], parts[2], 1.0];
-      selectedWoodName = name;
+      activeWoodKey = btn.getAttribute('data-wood-key') || getWoodKey(name);
+      selectedWoodName = woodPresets[activeWoodKey]?.name || name;
 
-      if (activeWoodNameEl) activeWoodNameEl.textContent = name;
+      if (activeWoodNameEl) activeWoodNameEl.textContent = selectedWoodName;
       applyMaterialsToViewer();
+      updatePieceCartInfo();
       updateWhatsAppPrefill();
     });
   });
@@ -1194,16 +1362,8 @@ function initAtelier3dStudio() {
       if (modelPrice) modelPrice.textContent = price;
       if (modelLead) modelLead.textContent = lead;
 
+      updatePieceCartInfo();
       updateWhatsAppPrefill();
-
-      // Update current active piece for Blueprint Drawer
-      currentActivePiece = {
-        id: `3d_${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-        name: `${title} (${selectedFabricName})`,
-        price: parseInt(price.replace(/[^0-9]/g, '').slice(0, 6)) || 120000,
-        timber: `${wood} · ${selectedWoodName}`,
-        image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
-      };
     });
   });
 
