@@ -8570,3 +8570,397 @@ body, .site-header, .collection-card, .product-modal-container {
   }
 }
 
+/* Nav 3D Pill Badge */
+.nav-3d-glow {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nav-3d-badge {
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 0.15rem 0.38rem;
+  background: linear-gradient(135deg, #D4AF37, #AA820A);
+  color: #0A0A0A;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+/* ==========================================================================
+   ATELIER 3D DIGITAL LAB & AR INSPECTION SECTION
+   ========================================================================== */
+.atelier-3d-section {
+  padding: 7rem 0 6rem;
+  scroll-margin-top: 85px;
+  position: relative;
+  background: var(--bg-surface);
+  overflow: hidden;
+  border-top: 1px solid rgba(158, 122, 56, 0.2);
+  border-bottom: 1px solid rgba(158, 122, 56, 0.2);
+}
+
+.atelier-3d-wrapper {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+/* Left Stage */
+.atelier-3d-stage {
+  position: relative;
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.7) 0%, rgba(10, 10, 10, 0.9) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 0 40px rgba(212, 175, 55, 0.05);
+}
+
+[data-theme="light"] .atelier-3d-stage {
+  background: linear-gradient(145deg, #FBF9F5 0%, #EFEBE4 100%);
+  border-color: rgba(158, 122, 56, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 0 30px rgba(158, 122, 56, 0.04);
+}
+
+.atelier-3d-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.main-model-viewer {
+  width: 100%;
+  height: 520px;
+  display: block;
+  outline: none;
+  --poster-color: transparent;
+  cursor: grab;
+  position: relative;
+  z-index: 2;
+}
+
+.main-model-viewer:active {
+  cursor: grabbing;
+}
+
+/* Tip & AR Overlays */
+.viewer-interaction-tip {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  background: rgba(15, 15, 15, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #E6DFD5;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  pointer-events: none;
+  z-index: 3;
+}
+
+[data-theme="light"] .viewer-interaction-tip {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(158, 122, 56, 0.35);
+  color: #44403C;
+}
+
+.ar-floating-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: linear-gradient(135deg, #D4AF37, #AA820A);
+  color: #0A0A0A;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.45rem 0.95rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 3;
+}
+
+.ar-floating-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.6);
+}
+
+/* Bottom Controls Toolbar */
+.stage-controls-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.5rem;
+  background: rgba(12, 12, 12, 0.85);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+  z-index: 3;
+}
+
+[data-theme="light"] .stage-controls-toolbar {
+  background: rgba(250, 248, 245, 0.95);
+  border-top-color: rgba(158, 122, 56, 0.25);
+}
+
+.stage-tool-btn {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stage-tool-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #D4AF37;
+}
+
+[data-theme="light"] .stage-tool-btn {
+  border-color: rgba(158, 122, 56, 0.4);
+  color: #9E7A38;
+}
+
+[data-theme="light"] .stage-tool-btn:hover {
+  background: rgba(158, 122, 56, 0.1);
+}
+
+.pbr-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.pbr-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+/* Right Details Panel */
+.atelier-3d-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.details-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #D4AF37;
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="light"] .details-tag {
+  color: #9E7A38;
+}
+
+.details-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.details-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.details-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(158, 122, 56, 0.2);
+  border-radius: 10px;
+  padding: 1.2rem;
+}
+
+[data-theme="light"] .details-specs-grid {
+  background: #FFFFFF;
+  border-color: rgba(158, 122, 56, 0.25);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.spec-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+}
+
+[data-theme="light"] .spec-label {
+  color: #78716C;
+}
+
+.spec-val {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Switcher Buttons */
+.model-switcher-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.switcher-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+}
+
+[data-theme="light"] .switcher-label {
+  color: #78716C;
+}
+
+.switcher-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(158, 122, 56, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+[data-theme="light"] .switch-btn {
+  background: #FFFFFF;
+  border-color: rgba(158, 122, 56, 0.25);
+}
+
+.switch-btn:hover {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.06);
+  transform: translateX(4px);
+}
+
+.switch-btn.active {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.12);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.15);
+}
+
+[data-theme="light"] .switch-btn.active {
+  background: #FDF9F0;
+  border-color: #9E7A38;
+}
+
+.btn-num {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #D4AF37;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="light"] .btn-num {
+  color: #9E7A38;
+  border-color: rgba(158, 122, 56, 0.5);
+}
+
+.btn-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.atelier-3d-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .atelier-3d-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .main-model-viewer {
+    height: 420px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-model-viewer {
+    height: 340px;
+  }
+  .details-specs-grid {
+    grid-template-columns: 1fr;
+  }
+  .atelier-3d-actions {
+    flex-direction: column;
+  }
+  .atelier-3d-actions a,
+  .atelier-3d-actions button {
+    width: 100%;
+  }
+}
+
+

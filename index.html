@@ -21,6 +21,9 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
   
+  <!-- Google Model Viewer Web Component for 3D & AR Inspection -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  
   <!-- Favicon SVG -->
   <link rel="icon" type="image/svg+xml" href="assets/heaven_official_badge.svg">
 
@@ -205,6 +208,12 @@
 
         <div class="nav-item">
           <a href="heritage.html" class="nav-link ">Heritage & Craft</a>
+        </div>
+        <div class="nav-item">
+          <a href="#atelier3d" class="nav-link nav-3d-glow">
+            <span>3D Studio</span>
+            <span class="nav-3d-badge">360°</span>
+          </a>
         </div>
         <div class="nav-item">
           <a href="showroom.html" class="nav-link ">Showroom</a>
@@ -687,6 +696,164 @@
               <span class="craft-lead-time">Lead Time: 3–4 Weeks</span>
               <button type="button" class="btn btn-card-inquire quick-wa-product-btn" data-product="Executive Chair – Diamond Brown" data-dims="W 74 x D 78 x H 118 cm" data-wood="Top-Grain Leather & Teak">Inquire on WhatsApp</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥-B 3D ATELIER STUDIO & AR INSPECTION LAB -->
+  <section class="atelier-3d-section" id="atelier3d">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-kicker">ATELIER 3D DIGITAL LAB · 360° INSPECTION</span>
+        <h2 class="section-title">Experience Heirloom Craft In 3D & Augmented Reality</h2>
+        <p class="section-sub">
+          Rotate 360°, inspect hand-carved joinery, zoom in on fabric grain, and visualize in your own living space before our master craftsmen touch a single piece of timber.
+        </p>
+      </div>
+
+      <div class="atelier-3d-wrapper">
+        <!-- Left: 3D Canvas Stage -->
+        <div class="atelier-3d-stage">
+          <div class="atelier-3d-glow"></div>
+          
+          <model-viewer
+            id="atelier3dViewer"
+            src="assets/ChairDamaskPurplegold.glb"
+            alt="Imperial Damask Sovereign Chair 3D Model"
+            auto-rotate
+            auto-rotate-delay="600"
+            rotation-per-second="18deg"
+            camera-controls
+            shadow-intensity="1.6"
+            shadow-softness="0.75"
+            exposure="1.15"
+            environment-image="neutral"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            loading="eager"
+            poster="assets/royal_blue_gold_luxury_sofa_pair.webp"
+            class="main-model-viewer"
+          >
+            <!-- Overlay tip -->
+            <div class="viewer-interaction-tip">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>Drag to Rotate 360° · Scroll to Zoom</span>
+            </div>
+
+            <!-- AR button -->
+            <div slot="ar-button" class="ar-floating-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              <span>View in Your Room (AR)</span>
+            </div>
+          </model-viewer>
+
+          <!-- Viewer Controls Toolbar -->
+          <div class="stage-controls-toolbar">
+            <button type="button" id="btnToggleRotate" class="stage-tool-btn" title="Toggle Auto-Rotation">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span id="rotateStateText">Auto-Rotate: ON</span>
+            </button>
+            <button type="button" id="btnResetCamera" class="stage-tool-btn" title="Reset Camera View">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Reset Angle</span>
+            </button>
+            <div class="pbr-badge">
+              <span class="pbr-dot"></span>
+              <span>Ultra HD PBR Textures</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Piece Specs & Switcher -->
+        <div class="atelier-3d-details">
+          <div class="details-header">
+            <span class="details-tag" id="modelTag">SIGNATURE HEIRLOOM</span>
+            <h3 class="details-title" id="modelTitle">Imperial Damask Sovereign Chair</h3>
+            <p class="details-desc" id="modelDesc">
+              Hand-sculpted solid teak frame with gilded Baroque flourishes, wrapped in royal damask brocade. Designed as a statement throne for prestigious Chittagong estates.
+            </p>
+          </div>
+
+          <!-- Quick Specs Grid -->
+          <div class="details-specs-grid">
+            <div class="spec-item">
+              <span class="spec-label">HARDWOOD CORE</span>
+              <span class="spec-val" id="modelWood">Seasoned Chittagong Teak</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">FINISH DETAIL</span>
+              <span class="spec-val" id="modelFinish">24K Antique Gold Leaf Fluting</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">ESTIMATED INVESTMENT</span>
+              <span class="spec-val" id="modelPrice">৳85,000 – ৳125,000</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">ATELIER TIMELINE</span>
+              <span class="spec-val" id="modelLead">4–6 Weeks Handcrafting</span>
+            </div>
+          </div>
+
+          <!-- Model Switcher Selector -->
+          <div class="model-switcher-group">
+            <span class="switcher-label">SELECT ARCHITECTURAL PIECE TO INSPECT:</span>
+            <div class="switcher-buttons">
+              <button type="button" class="switch-btn active" 
+                data-model="assets/ChairDamaskPurplegold.glb" 
+                data-tag="SIGNATURE HEIRLOOM" 
+                data-title="Imperial Damask Sovereign Chair" 
+                data-desc="Hand-sculpted solid teak frame with gilded Baroque flourishes, wrapped in royal damask brocade. Designed as a statement throne for prestigious Chittagong estates." 
+                data-wood="Seasoned Chittagong Teak" 
+                data-finish="24K Antique Gold Leaf Fluting" 
+                data-price="৳85,000 – ৳125,000" 
+                data-lead="4–6 Weeks Handcrafting"
+                data-wa-text="Hello Heaven Furniture Mart, I am interested in customizing the 3D Imperial Damask Sovereign Chair for my residence.">
+                <span class="btn-num">01</span>
+                <span class="btn-text">Damask Throne</span>
+              </button>
+
+              <button type="button" class="switch-btn" 
+                data-model="assets/GlamVelvetSofa.glb" 
+                data-tag="CONTEMPORARY MASTERPIECE" 
+                data-title="Agrabad Velvet Grand Salon Sofa" 
+                data-desc="Architectural low-slung proportions upholstered in jewel-tone emerald velvet. Precision-mortised Gamari interior framing engineered for lifetime stability." 
+                data-wood="Kiln-Dried Gamari & Teak" 
+                data-finish="Italian Jewel Velvet & Matte Brass" 
+                data-price="৳145,000 – ৳195,000" 
+                data-lead="5–7 Weeks Handcrafting"
+                data-wa-text="Hello Heaven Furniture Mart, I would like to inquire about the 3D Agrabad Velvet Grand Salon Sofa for my living room.">
+                <span class="btn-num">02</span>
+                <span class="btn-text">Emerald Salon Sofa</span>
+              </button>
+
+              <button type="button" class="switch-btn" 
+                data-model="assets/SheenWoodLeatherSofa.glb" 
+                data-tag="EXECUTIVE SUITE" 
+                data-title="GEC Presidential Teak & Leather Suite" 
+                data-desc="Substantial exposed solid Burmese teak skeleton with hand-stitched semi-aniline Italian leather. Built for commanding boardrooms and discerning private residences." 
+                data-wood="100% Burmese Hardwood Teak" 
+                data-finish="Full-Grain Leather & Teak Oil" 
+                data-price="৳180,000 – ৳260,000" 
+                data-lead="6–8 Weeks Handcrafting"
+                data-wa-text="Hello Heaven Furniture Mart, I am inquiring about the 3D GEC Presidential Teak & Leather Suite.">
+                <span class="btn-num">03</span>
+                <span class="btn-text">Executive Teak & Leather</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Direct Inquire & Blueprint Buttons -->
+          <div class="atelier-3d-actions">
+            <a href="https://wa.me/8801960481983?text=Hello%20Heaven%20Furniture%20Mart,%20I%20am%20interested%20in%20customizing%20the%203D%20Imperial%20Damask%20Sovereign%20Chair%20for%20my%20residence." target="_blank" rel="noopener" id="btnWa3dInquire" class="btn btn-gold" style="flex: 1.2; display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.95rem 1.2rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-2.128-.536-1.745-.729-2.876-2.518-2.964-2.634-.088-.117-.714-.95-.714-1.815 0-.866.452-1.291.613-1.468.161-.177.352-.222.469-.222.117 0 .235.001.338.006.109.005.255-.042.399.303.149.356.51 1.246.554 1.335.044.089.073.193.015.309-.059.117-.088.19-.176.294-.088.104-.185.233-.264.313-.088.089-.18.186-.078.361.103.175.457.755.981 1.222.674.6 1.243.786 1.418.874.176.088.279.074.382-.045.103-.117.44-.514.558-.69.117-.176.235-.147.396-.088.161.059 1.026.484 1.202.572.176.088.293.132.338.206.044.074.044.43-.1 1.035z"/></svg>
+              <span id="btnWa3dText">Inquire on WhatsApp (Pre-filled)</span>
+            </a>
+            <button type="button" id="btnAdd3dToBlueprint" class="btn btn-outline-gold" style="padding: 0.95rem 1.1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" title="Save piece into your room blueprint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+              <span>Add to Blueprint</span>
+            </button>
           </div>
         </div>
       </div>

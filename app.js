@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initWorkshopShorts();
   initYouTubeShortsGallery();
+  initAtelier3dStudio();
   updateShowingCount();
 });
 
@@ -1043,5 +1044,120 @@ function initFaqAccordion() {
     });
   });
 }
+
+/* ==========================================================================
+   15. ATELIER 3D DIGITAL LAB & AR INSPECTION ENGINE
+   ========================================================================== */
+function initAtelier3dStudio() {
+  const viewer = document.getElementById('atelier3dViewer');
+  if (!viewer) return;
+
+  const switchBtns = document.querySelectorAll('.model-switcher-group .switch-btn');
+  const modelTag = document.getElementById('modelTag');
+  const modelTitle = document.getElementById('modelTitle');
+  const modelDesc = document.getElementById('modelDesc');
+  const modelWood = document.getElementById('modelWood');
+  const modelFinish = document.getElementById('modelFinish');
+  const modelPrice = document.getElementById('modelPrice');
+  const modelLead = document.getElementById('modelLead');
+  const btnWaInquire = document.getElementById('btnWa3dInquire');
+  const btnAddBlueprint = document.getElementById('btnAdd3dToBlueprint');
+
+  const btnToggleRotate = document.getElementById('btnToggleRotate');
+  const rotateText = document.getElementById('rotateStateText');
+  const btnResetCamera = document.getElementById('btnResetCamera');
+
+  // Track currently active piece for Room Blueprint Cart integration
+  let currentActivePiece = {
+    id: '3d_damask_throne',
+    name: 'Imperial Damask Sovereign Chair',
+    price: 105000,
+    timber: 'Seasoned Chittagong Teak',
+    image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
+  };
+
+  switchBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const modelSrc = btn.getAttribute('data-model');
+      const tag = btn.getAttribute('data-tag');
+      const title = btn.getAttribute('data-title');
+      const desc = btn.getAttribute('data-desc');
+      const wood = btn.getAttribute('data-wood');
+      const finish = btn.getAttribute('data-finish');
+      const price = btn.getAttribute('data-price');
+      const lead = btn.getAttribute('data-lead');
+      const waText = btn.getAttribute('data-wa-text');
+
+      if (viewer && modelSrc) {
+        viewer.src = modelSrc;
+        if (typeof viewer.dismissPoster === 'function') {
+          viewer.dismissPoster();
+        }
+      }
+
+      if (modelTag) modelTag.textContent = tag;
+      if (modelTitle) modelTitle.textContent = title;
+      if (modelDesc) modelDesc.textContent = desc;
+      if (modelWood) modelWood.textContent = wood;
+      if (modelFinish) modelFinish.textContent = finish;
+      if (modelPrice) modelPrice.textContent = price;
+      if (modelLead) modelLead.textContent = lead;
+
+      if (btnWaInquire && waText) {
+        btnWaInquire.href = `https://wa.me/8801960481983?text=${encodeURIComponent(waText)}`;
+      }
+
+      // Update current active piece for Blueprint Drawer
+      currentActivePiece = {
+        id: `3d_${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+        name: title,
+        price: parseInt(price.replace(/[^0-9]/g, '').slice(0, 6)) || 120000,
+        timber: wood,
+        image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
+      };
+    });
+  });
+
+  // Toggle Auto Rotate
+  let isRotating = true;
+  if (btnToggleRotate) {
+    btnToggleRotate.addEventListener('click', () => {
+      isRotating = !isRotating;
+      if (isRotating) {
+        viewer.setAttribute('auto-rotate', '');
+        if (rotateText) rotateText.textContent = 'Auto-Rotate: ON';
+      } else {
+        viewer.removeAttribute('auto-rotate');
+        if (rotateText) rotateText.textContent = 'Auto-Rotate: OFF';
+      }
+    });
+  }
+
+  // Reset Camera View
+  if (btnResetCamera) {
+    btnResetCamera.addEventListener('click', () => {
+      viewer.cameraOrbit = '0deg 75deg 105%';
+      viewer.fieldOfView = 'auto';
+      if (typeof viewer.jumpCameraToGoal === 'function') {
+        viewer.jumpCameraToGoal();
+      }
+    });
+  }
+
+  // Add 3D Piece to Blueprint Drawer
+  if (btnAddBlueprint) {
+    btnAddBlueprint.addEventListener('click', () => {
+      if (window.HFM_ECOMMERCE && currentActivePiece) {
+        window.HFM_ECOMMERCE.addToCart(currentActivePiece);
+      } else {
+        alert(`${currentActivePiece.name} added to your Atelier Room Blueprint.`);
+      }
+    });
+  }
+}
+
 
 
