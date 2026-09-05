@@ -1083,38 +1083,38 @@ function initAtelier3dStudio() {
     gold: {
       name: 'Original Royal Brocade',
       chair: { color: [1.0, 1.0, 1.0], sheen: [0.2, 0.0, 1.0] },
-      sofa1: { variant: 'Champagne', color: [0.85, 0.70, 0.45], sheen: [0.9, 0.7, 0.5] },
+      sofa1: { color: [0.85, 0.65, 0.28], sheen: [0.9, 0.7, 0.4] },
       sofa2: { color: [1.0, 0.85, 0.60], sheen: [0.8, 0.7, 0.5] }
     },
     emerald: {
       name: 'Royal Emerald Velvet',
       chair: { color: [0.08, 0.45, 0.22], sheen: [0.1, 0.9, 0.3] },
-      sofa1: { variant: 'Champagne', color: [0.05, 0.65, 0.22], sheen: [0.1, 0.9, 0.35] },
-      sofa2: { color: [0.10, 0.75, 0.28], sheen: [0.2, 0.95, 0.4] }
+      sofa1: { color: [0.04, 0.38, 0.16], sheen: [0.1, 0.85, 0.35] },
+      sofa2: { color: [0.08, 0.55, 0.22], sheen: [0.2, 0.95, 0.4] }
     },
     sapphire: {
       name: 'Midnight Sapphire Blue',
       chair: { color: [0.10, 0.22, 0.65], sheen: [0.1, 0.4, 1.0] },
-      sofa1: { variant: 'Navy', color: [0.08, 0.22, 0.75], sheen: [0.1, 0.4, 1.0] },
-      sofa2: { color: [0.20, 0.45, 1.25], sheen: [0.3, 0.6, 1.5] }
+      sofa1: { color: [0.06, 0.20, 0.65], sheen: [0.1, 0.4, 1.0] },
+      sofa2: { color: [0.15, 0.35, 0.95], sheen: [0.3, 0.6, 1.5] }
     },
     crimson: {
       name: 'Bordeaux Crimson Red',
       chair: { color: [0.65, 0.08, 0.15], sheen: [1.0, 0.2, 0.3] },
-      sofa1: { variant: 'Pale Pink', color: [0.40, 0.02, 0.06], sheen: [0.60, 0.05, 0.12] },
-      sofa2: { color: [0.80, 0.10, 0.18], sheen: [0.9, 0.2, 0.3] }
+      sofa1: { color: [0.45, 0.05, 0.10], sheen: [0.70, 0.08, 0.15] },
+      sofa2: { color: [0.75, 0.10, 0.16], sheen: [0.9, 0.2, 0.3] }
     },
     black: {
       name: 'Smoked Charcoal Black',
       chair: { color: [0.15, 0.15, 0.15], sheen: [0.2, 0.2, 0.2] },
-      sofa1: { variant: 'Black', color: [0.04, 0.04, 0.04], sheen: [0.1, 0.1, 0.1] },
-      sofa2: { color: [0.18, 0.18, 0.18], sheen: [0.2, 0.2, 0.2] }
+      sofa1: { color: [0.06, 0.06, 0.06], sheen: [0.1, 0.1, 0.1] },
+      sofa2: { color: [0.15, 0.15, 0.15], sheen: [0.2, 0.2, 0.2] }
     },
     cream: {
       name: 'Ivory Alabaster Cream',
       chair: { color: [0.95, 0.92, 0.85], sheen: [1.0, 0.95, 0.9] },
-      sofa1: { variant: 'Gray', color: [0.92, 0.90, 0.85], sheen: [0.9, 0.92, 0.95] },
-      sofa2: { color: [1.15, 1.10, 1.00], sheen: [1.0, 0.95, 0.9] }
+      sofa1: { color: [0.92, 0.90, 0.84], sheen: [0.9, 0.92, 0.95] },
+      sofa2: { color: [1.10, 1.05, 0.95], sheen: [1.0, 0.95, 0.9] }
     }
   };
 
@@ -1122,19 +1122,19 @@ function initAtelier3dStudio() {
     teak: {
       name: 'Chittagong Teak (Natural Honey)',
       chair: [1.0, 1.0, 1.0],
-      sofa1: [0.90, 0.65, 0.35],
+      sofa1: [0.85, 0.60, 0.32],
       sofa2: [1.0, 1.0, 1.0]
     },
     walnut: {
       name: 'Smoked Walnut (Dark Cocoa)',
       chair: [0.45, 0.35, 0.28],
-      sofa1: [0.25, 0.18, 0.14],
+      sofa1: [0.24, 0.16, 0.12],
       sofa2: [0.45, 0.35, 0.28]
     },
     mahogany: {
       name: 'Antique Mahogany (Rich Amber)',
       chair: [0.72, 0.38, 0.26],
-      sofa1: [0.65, 0.30, 0.18],
+      sofa1: [0.55, 0.20, 0.12],
       sofa2: [0.60, 0.25, 0.14]
     }
   };
@@ -1178,17 +1178,7 @@ function initAtelier3dStudio() {
     const fData = fabricPresets[activeColorKey] || fabricPresets.gold;
     const wData = woodPresets[activeWoodKey] || woodPresets.teak;
 
-    // 1. If Model 02 has glTF variants, set the base variant first
-    if (isSofa1 && fData.sofa1 && fData.sofa1.variant) {
-      if (viewer.availableVariants && viewer.availableVariants.includes(fData.sofa1.variant)) {
-        if (viewer.variantName !== fData.sofa1.variant) {
-          viewer.variantName = fData.sofa1.variant;
-          await new Promise(r => setTimeout(r, 120));
-        }
-      }
-    }
-
-    // 2. Direct Three.js Shader Material Modification (Instant & 100% Reliable across all 3 models)
+    // 1. Direct Three.js Shader Material Modification (Instant & 100% Reliable across all 3 models)
     const scene = getThreeScene();
     if (scene) {
       scene.traverse(obj => {
@@ -1242,7 +1232,7 @@ function initAtelier3dStudio() {
       }
     }
 
-    // 3. Fallback / Complement via Model-Viewer Public API (Safe try-catch)
+    // 2. Synchronize via Model-Viewer Public API (Ensures persistent material state)
     try {
       if (viewer.model && viewer.model.materials) {
         for (const mat of viewer.model.materials) {
@@ -1256,17 +1246,50 @@ function initAtelier3dStudio() {
             } else if (n.includes('wood') && mat.pbrMetallicRoughness) {
               mat.pbrMetallicRoughness.setBaseColorFactor([...wData.chair, 1]);
             }
+          } else if (isSofa1) {
+            if (n.includes('fabric') && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...fData.sofa1.color, 1]);
+              if (typeof mat.setSheenColorFactor === 'function') {
+                mat.setSheenColorFactor(fData.sofa1.sheen);
+              }
+            } else if ((n.includes('leg') || n.includes('feet')) && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...wData.sofa1, 1]);
+            }
+          } else if (isSofa2) {
+            if (['brown', 'paisley', 'striped', 'fringe', 'frame_fabric'].includes(n) && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...fData.sofa2.color, 1]);
+              if (typeof mat.setSheenColorFactor === 'function') {
+                mat.setSheenColorFactor(fData.sofa2.sheen);
+              }
+            } else if (n === 'frame' && mat.pbrMetallicRoughness) {
+              mat.pbrMetallicRoughness.setBaseColorFactor([...wData.sofa2, 1]);
+            }
           }
         }
       }
     } catch (_) {}
   }
 
-  // Ensure materials re-apply whenever a model finishes loading
+  // Safe Multi-interval Material Applicator to eliminate race conditions
+  let applyTimers = [];
+  function applyMaterialsSafely() {
+    applyTimers.forEach(t => clearTimeout(t));
+    applyTimers = [];
+    const delays = [0, 60, 150, 350, 700, 1200];
+    delays.forEach(delay => {
+      const t = setTimeout(() => {
+        applyMaterialsToViewer();
+      }, delay);
+      applyTimers.push(t);
+    });
+  }
+
+  // Ensure materials re-apply whenever a model finishes loading or scene graph initializes
   viewer.addEventListener('load', () => {
-    setTimeout(() => {
-      applyMaterialsToViewer();
-    }, 100);
+    applyMaterialsSafely();
+  });
+  viewer.addEventListener('scene-graph-ready', () => {
+    applyMaterialsSafely();
   });
 
   // Track currently active piece for Room Blueprint Cart integration
@@ -1309,7 +1332,7 @@ function initAtelier3dStudio() {
       selectedFabricName = fabricPresets[activeColorKey]?.name || name;
 
       if (activeFabricNameEl) activeFabricNameEl.textContent = selectedFabricName;
-      applyMaterialsToViewer();
+      applyMaterialsSafely();
       updatePieceCartInfo();
       updateWhatsAppPrefill();
     });
@@ -1326,14 +1349,14 @@ function initAtelier3dStudio() {
       selectedWoodName = woodPresets[activeWoodKey]?.name || name;
 
       if (activeWoodNameEl) activeWoodNameEl.textContent = selectedWoodName;
-      applyMaterialsToViewer();
+      applyMaterialsSafely();
       updatePieceCartInfo();
       updateWhatsAppPrefill();
     });
   });
 
   // Model Switcher
-  switchBtns.forEach(btn => {
+  switchBtns.forEach((btn, idx) => {
     btn.addEventListener('click', () => {
       switchBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -1346,6 +1369,29 @@ function initAtelier3dStudio() {
       const finish = btn.getAttribute('data-finish');
       const price = btn.getAttribute('data-price');
       const lead = btn.getAttribute('data-lead');
+
+      // Auto-synchronize default fabric swatch based on selected model piece
+      if (idx === 1 || (modelSrc || '').includes('GlamVelvet')) {
+        // Model 02: "Emerald Salon Sofa" -> Default to Royal Emerald Velvet
+        const emeraldBtn = Array.from(fabricSwatches).find(b => b.getAttribute('data-color-key') === 'emerald');
+        if (emeraldBtn) {
+          fabricSwatches.forEach(b => b.classList.remove('active'));
+          emeraldBtn.classList.add('active');
+          activeColorKey = 'emerald';
+          selectedFabricName = fabricPresets.emerald.name;
+          if (activeFabricNameEl) activeFabricNameEl.textContent = selectedFabricName;
+        }
+      } else if (idx === 0 || (modelSrc || '').includes('Chair')) {
+        // Model 01: "Damask Throne" -> Default to Original Royal Brocade
+        const goldBtn = Array.from(fabricSwatches).find(b => b.getAttribute('data-color-key') === 'gold');
+        if (goldBtn) {
+          fabricSwatches.forEach(b => b.classList.remove('active'));
+          goldBtn.classList.add('active');
+          activeColorKey = 'gold';
+          selectedFabricName = fabricPresets.gold.name;
+          if (activeFabricNameEl) activeFabricNameEl.textContent = selectedFabricName;
+        }
+      }
 
       if (viewer && modelSrc) {
         viewer.src = modelSrc;
@@ -1362,6 +1408,7 @@ function initAtelier3dStudio() {
       if (modelPrice) modelPrice.textContent = price;
       if (modelLead) modelLead.textContent = lead;
 
+      applyMaterialsSafely();
       updatePieceCartInfo();
       updateWhatsAppPrefill();
     });
@@ -1403,6 +1450,9 @@ function initAtelier3dStudio() {
       }
     });
   }
+
+  // Initialize initial piece materials
+  applyMaterialsSafely();
 }
 
 

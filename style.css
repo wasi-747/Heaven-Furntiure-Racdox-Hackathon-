@@ -8923,10 +8923,23 @@ body, .site-header, .collection-card, .product-modal-container {
   border-color: rgba(158, 122, 56, 0.5);
 }
 
-.btn-text {
+.switch-btn .btn-text {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-primary);
+}
+
+/* Ensure CTA buttons always maintain high contrast white text */
+.btn-gold,
+.btn-gold .btn-text,
+#heroPrimaryCta .btn-text,
+.btn-gold * {
+  color: #FFFFFF !important;
+}
+
+.btn-gold svg,
+#heroPrimaryCta svg {
+  stroke: #FFFFFF !important;
 }
 
 .atelier-3d-actions {
