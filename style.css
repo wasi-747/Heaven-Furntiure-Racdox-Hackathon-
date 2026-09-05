@@ -8963,4 +8963,181 @@ body, .site-header, .collection-card, .product-modal-container {
   }
 }
 
+/* ==========================================================================
+   BESPOKE 3D MATERIAL & TONE CONFIGURATOR WIDGET
+   ========================================================================== */
+.atelier-customizer-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .atelier-customizer-box {
+  background: #FFFFFF;
+  border-color: rgba(158, 122, 56, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.customizer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  padding-bottom: 0.65rem;
+}
+
+[data-theme="light"] .customizer-header {
+  border-bottom-color: rgba(158, 122, 56, 0.15);
+}
+
+.customizer-title {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #D4AF37;
+}
+
+[data-theme="light"] .customizer-title {
+  color: #9E7A38;
+}
+
+.customizer-badge {
+  font-size: 0.68rem;
+  color: #10B981;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.customizer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.customizer-label-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+}
+
+.customizer-label {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #9CA3AF;
+}
+
+[data-theme="light"] .customizer-label {
+  color: #78716C;
+}
+
+.customizer-selection {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+/* Fabric Swatches */
+.swatch-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.swatch-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.swatch-btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+.swatch-btn.active {
+  border-color: #D4AF37;
+  transform: scale(1.18);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
+}
+
+.swatch-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Wood Swatches Pills */
+.wood-swatch-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wood-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(158, 122, 56, 0.25);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+[data-theme="light"] .wood-pill-btn {
+  background: #FDF9F0;
+  border-color: rgba(158, 122, 56, 0.3);
+}
+
+.wood-pill-btn:hover {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.wood-pill-btn.active {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+[data-theme="light"] .wood-pill-btn.active {
+  border-color: #9E7A38;
+  background: #F5ECD9;
+}
+
+.wood-grain-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
 

@@ -1067,6 +1067,17 @@ function initAtelier3dStudio() {
   const rotateText = document.getElementById('rotateStateText');
   const btnResetCamera = document.getElementById('btnResetCamera');
 
+  // Customizer State
+  let selectedFabricName = 'Original Royal Brocade';
+  let selectedFabricRgb = [1, 1, 1, 1];
+  let selectedWoodName = 'Chittagong Teak (Natural Honey)';
+  let selectedWoodRgb = [1, 1, 1, 1];
+
+  const fabricSwatches = document.querySelectorAll('#fabricSwatches .swatch-btn');
+  const activeFabricNameEl = document.getElementById('activeFabricName');
+  const woodSwatches = document.querySelectorAll('#woodSwatches .wood-pill-btn');
+  const activeWoodNameEl = document.getElementById('activeWoodName');
+
   // Track currently active piece for Room Blueprint Cart integration
   let currentActivePiece = {
     id: '3d_damask_throne',
@@ -1076,6 +1087,84 @@ function initAtelier3dStudio() {
     image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
   };
 
+  // Real-time Material Shader Application
+  function applyMaterialsToViewer() {
+    if (!viewer || !viewer.model) return;
+
+    // 1. Apply Upholstery / Velvet Shade
+    const fabricMaterials = viewer.model.materials.filter(m => {
+      const n = (m.name || '').toLowerCase();
+      return n === 'fabric' || n.includes('fabric') || n === 'brown' || n === 'paisley' || n === 'striped' || n === 'fringe';
+    });
+
+    fabricMaterials.forEach(m => {
+      if (m.pbrMetallicRoughness) {
+        m.pbrMetallicRoughness.setBaseColorFactor(selectedFabricRgb);
+      }
+    });
+
+    // 2. Apply Hardwood Stain Tone
+    const woodMaterials = viewer.model.materials.filter(m => {
+      const n = (m.name || '').toLowerCase();
+      return n === 'wood' || n === 'frame' || n.includes('legs') || n.includes('feet');
+    });
+
+    woodMaterials.forEach(m => {
+      if (m.pbrMetallicRoughness) {
+        m.pbrMetallicRoughness.setBaseColorFactor(selectedWoodRgb);
+      }
+    });
+  }
+
+  // Ensure materials re-apply whenever a model finishes loading
+  viewer.addEventListener('load', () => {
+    applyMaterialsToViewer();
+  });
+
+  function updateWhatsAppPrefill() {
+    if (!btnWaInquire) return;
+    const pieceTitle = modelTitle ? modelTitle.textContent.trim() : '3D Bespoke Piece';
+    const msg = `Hello Heaven Furniture Mart, I customized the 3D ${pieceTitle} with ${selectedFabricName} and ${selectedWoodName} finish in your 3D Atelier. I would like a consultation and formal quote for delivery in Chattogram.`;
+    btnWaInquire.href = `https://wa.me/8801960481983?text=${encodeURIComponent(msg)}`;
+  }
+
+  // Wire Fabric Swatches
+  fabricSwatches.forEach(btn => {
+    btn.addEventListener('click', () => {
+      fabricSwatches.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const name = btn.getAttribute('data-name');
+      const rgbStr = btn.getAttribute('data-rgb');
+      const parts = rgbStr.split(',').map(Number);
+      selectedFabricRgb = [parts[0], parts[1], parts[2], 1.0];
+      selectedFabricName = name;
+
+      if (activeFabricNameEl) activeFabricNameEl.textContent = name;
+      applyMaterialsToViewer();
+      updateWhatsAppPrefill();
+    });
+  });
+
+  // Wire Wood Swatches
+  woodSwatches.forEach(btn => {
+    btn.addEventListener('click', () => {
+      woodSwatches.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const name = btn.getAttribute('data-name');
+      const rgbStr = btn.getAttribute('data-rgb');
+      const parts = rgbStr.split(',').map(Number);
+      selectedWoodRgb = [parts[0], parts[1], parts[2], 1.0];
+      selectedWoodName = name;
+
+      if (activeWoodNameEl) activeWoodNameEl.textContent = name;
+      applyMaterialsToViewer();
+      updateWhatsAppPrefill();
+    });
+  });
+
+  // Model Switcher
   switchBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       switchBtns.forEach(b => b.classList.remove('active'));
@@ -1089,7 +1178,6 @@ function initAtelier3dStudio() {
       const finish = btn.getAttribute('data-finish');
       const price = btn.getAttribute('data-price');
       const lead = btn.getAttribute('data-lead');
-      const waText = btn.getAttribute('data-wa-text');
 
       if (viewer && modelSrc) {
         viewer.src = modelSrc;
@@ -1106,16 +1194,14 @@ function initAtelier3dStudio() {
       if (modelPrice) modelPrice.textContent = price;
       if (modelLead) modelLead.textContent = lead;
 
-      if (btnWaInquire && waText) {
-        btnWaInquire.href = `https://wa.me/8801960481983?text=${encodeURIComponent(waText)}`;
-      }
+      updateWhatsAppPrefill();
 
       // Update current active piece for Blueprint Drawer
       currentActivePiece = {
         id: `3d_${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-        name: title,
+        name: `${title} (${selectedFabricName})`,
         price: parseInt(price.replace(/[^0-9]/g, '').slice(0, 6)) || 120000,
-        timber: wood,
+        timber: `${wood} · ${selectedWoodName}`,
         image: 'assets/royal_blue_gold_luxury_sofa_pair.webp'
       };
     });
