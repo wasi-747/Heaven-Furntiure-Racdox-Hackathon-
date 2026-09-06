@@ -13,10 +13,10 @@
   --bg-ivory: #F8F7F4;
   --bg-ivory-card: #FFFFFF;
 
-  --color-gold: #9E7A38;       /* Deep warm architectural antique gold */
-  --color-gold-hover: #7E5F26;
-  --color-gold-light: rgba(158, 122, 56, 0.08);
-  --color-gold-glow: rgba(158, 122, 56, 0.18);
+  --color-gold: #B47E24;       /* Radiant Warm Antique Gold (Logo Harmonized) */
+  --color-gold-hover: #966518;
+  --color-gold-light: rgba(180, 126, 36, 0.10);
+  --color-gold-glow: rgba(180, 126, 36, 0.22);
 
   --color-walnut: #2E1D16;     /* Deep Grounding Timber */
   --color-wood-tan: #8C6207;   /* Burmese Teak Amber */
@@ -1013,8 +1013,9 @@ button, input, select, textarea {
 }
 
 .stat-right {
-  bottom: -1.5rem;
-  right: 1rem;
+  top: 35%;
+  right: -2rem;
+  bottom: auto;
   max-width: 260px;
 }
 
@@ -2772,10 +2773,10 @@ button, input, select, textarea {
   --bg-surface-elevated: #16262A;
   --bg-surface-glass: rgba(18, 30, 33, 0.88);
 
-  --color-gold: #D4AF37;       /* Muted Brushed Brass / Gold */
-  --color-gold-hover: #E2C264;
-  --color-gold-light: rgba(212, 175, 55, 0.12);
-  --color-gold-glow: rgba(212, 175, 55, 0.32);
+  --color-gold: #DAA742;       /* Imperial Logo Gold */
+  --color-gold-hover: #F0C46A;
+  --color-gold-light: rgba(218, 167, 66, 0.12);
+  --color-gold-glow: rgba(218, 167, 66, 0.32);
 
   --text-white: #FFFFFF;
   --text-primary: #FFFFFF;
@@ -2802,10 +2803,10 @@ button, input, select, textarea {
   --bg-surface-elevated: #F2EFEA;
   --bg-surface-glass: rgba(248, 247, 244, 0.96);
 
-  --color-gold: #9E7A38;       /* Deep Antique Brass */
-  --color-gold-hover: #7E5F26;
-  --color-gold-light: rgba(158, 122, 56, 0.08);
-  --color-gold-glow: rgba(158, 122, 56, 0.18);
+  --color-gold: #B47E24;       /* Radiant Warm Antique Gold (Logo Harmonized) */
+  --color-gold-hover: #966518;
+  --color-gold-light: rgba(180, 126, 36, 0.10);
+  --color-gold-glow: rgba(180, 126, 36, 0.22);
 
   --text-white: #1A1918;
   --text-primary: #1A1918;
@@ -6937,19 +6938,20 @@ body, .site-header, .collection-card, .product-modal-container {
   height: 62px;
   border-radius: 50%;
   flex-shrink: 0;
-  border: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  border: 1.5px solid rgba(218, 167, 66, 0.55);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25), 0 0 10px rgba(218, 167, 66, 0.20);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .brand-logo-group:hover .brand-emblem-badge {
   transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+  border-color: #DAA742;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 16px rgba(218, 167, 66, 0.40);
 }
 
 .brand-emblem-badge img,
