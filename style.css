@@ -4004,37 +4004,19 @@ body, .site-header, .collection-card, .product-modal-container {
 
 [data-theme="light"] .review-snippet {
   color: #2D2924 !important;
-  font-size: 0.98rem !important;
-  font-style: italic !important;
-  font-weight: 500 !important;
-  line-height: 1.6 !important;
-  border-top: 1px solid #EAE5DC !important;
-  padding-top: 1rem !important;
-  margin-top: 1rem !important;
+  border-top-color: #EAE5DC !important;
 }
 
 [data-theme="light"] .snippet-author {
   color: #1A1918 !important;
-  font-weight: 700 !important;
-  font-style: normal !important;
-  display: block;
-  margin-top: 0.5rem;
 }
 
 [data-theme="light"] .warranty-desc {
   color: #38342E !important;
-  font-size: 0.95rem !important;
-  font-weight: 500 !important;
-  line-height: 1.55 !important;
 }
 
 [data-theme="light"] .warranty-specs span {
   color: #1A1918 !important;
-  font-weight: 600 !important;
-  background: #F4F1EA !important;
-  padding: 0.4rem 0.75rem !important;
-  border-radius: 4px !important;
-  border: 1px solid #E2DCD4 !important;
 }
 
 /* 3. Why Choose Heaven ("What You Can Count On") Section */
@@ -4118,6 +4100,7 @@ body, .site-header, .collection-card, .product-modal-container {
   padding: clamp(4rem, 6vw, 5.5rem) 0;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme="light"] .trust-proofs-section {
@@ -4147,7 +4130,7 @@ body, .site-header, .collection-card, .product-modal-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .proof-card:hover {
@@ -4184,6 +4167,7 @@ body, .site-header, .collection-card, .product-modal-container {
   justify-content: center;
   color: #8C6D28;
   flex-shrink: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 [data-theme="dark"] .seal-icon-box {
@@ -4203,6 +4187,7 @@ body, .site-header, .collection-card, .product-modal-container {
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-kicker-gold {
@@ -4262,6 +4247,7 @@ body, .site-header, .collection-card, .product-modal-container {
   border-radius: 6px;
   display: inline-flex;
   align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 [data-theme="light"] .warranty-spec-pill {
@@ -4352,6 +4338,9 @@ body, .site-header, .collection-card, .product-modal-container {
   font-size: 0.88rem;
   font-weight: 700;
   font-style: normal;
+  display: block;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 [data-theme="light"] .snippet-author {
@@ -4493,12 +4482,12 @@ body, .site-header, .collection-card, .product-modal-container {
   margin: 1.15rem 0 1.25rem 0;
   padding: 1rem 1.25rem;
   border-radius: 12px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme="light"] .google-score-banner {
   background: #FDF9EE !important;
-  border: 1.5px solid #F0DDB3 !important;
+  border: 1px solid #F0DDB3 !important;
 }
 
 [data-theme="dark"] .google-score-banner {
